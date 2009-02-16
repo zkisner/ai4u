@@ -19,8 +19,9 @@ public class RandomUtils extends Random {
 	 */
 	public <T> T pickRandom(Collection<T> collection) {
 		Iterator<T> iter = collection.iterator();
-		for (int i = 0; i < nextInt(collection.size()) - 1; i++)
-			iter.next();
+		int randIndex = nextInt(collection.size());
+		
+		for (int i = 0; i < randIndex - 1; i++) iter.next();
 		return iter.next();
 	}
 	
