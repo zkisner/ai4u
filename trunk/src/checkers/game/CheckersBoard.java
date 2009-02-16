@@ -1,32 +1,35 @@
-package checkers.data;
+package checkers.game;
 
 import static checkers.calcs.BitBoardConsts.*;
+import games.Board;
+import games.Move;
 
 /**
+ * This is an implementation of the {@link Board}  interface for the checkers
+ * game.
  * 
- * 
- * @author igalk
+ * @author kreich
  */
-public class CheckersBoard {
+public class CheckersBoard implements Board {
 
 	/**
-	 * @return The white's state.
+	 * @see games.Board#makeMove(games.Move)
 	 */
+	@Override
+	public void makeMove(Move move) {
+		// TODO not yet implemented
+	}
+	
+	/** @return The white's state. */
 	public int getW() { return w; }
 	
-	/**
-	 * @return The white checkers' state.
-	 */
+	/** @return The white checkers' state. */
 	public int getWc() { return wc; }
 	
-	/**
-	 * @return The black's state.
-	 */
+	/** @return The black's state. */
 	public int getB() { return b; }
 	
-	/**
-	 * @return The black checkers' state.
-	 */
+	/** @return The black checkers' state. */
 	public int getBc() { return bc; }
 	
 	/** The white's board state. */

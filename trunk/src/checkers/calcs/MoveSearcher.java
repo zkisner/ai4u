@@ -5,7 +5,7 @@ import static checkers.calcs.BitBoardConsts.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import checkers.data.CheckersBoard;
+import checkers.game.CheckersBoard;
 
 /**
  * 
