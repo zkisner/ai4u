@@ -1,6 +1,9 @@
 package checkers.game;
 
 import static checkers.calcs.BitBoardConsts.*;
+
+import java.util.List;
+
 import games.Board;
 import games.Move;
 
@@ -18,6 +21,15 @@ public class CheckersBoard implements Board {
 	@Override
 	public void makeMove(Move move) {
 		// TODO not yet implemented
+	}
+	
+	/**
+	 * @see games.Board#getMoves()
+	 */
+	@Override
+	public List<Move> getMoves() {
+		// TODO not yet implemented
+		return null;
 	}
 	
 	/** @return The white's state. */

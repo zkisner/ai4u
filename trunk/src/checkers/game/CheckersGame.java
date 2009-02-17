@@ -4,6 +4,7 @@ import games.Game;
 import games.Logic;
 import games.Move;
 import games.Player;
+import games.display.GameDisplayer;
 
 /**
  * This is an implementation of the {@link Game} interface.
@@ -14,11 +15,14 @@ public class CheckersGame implements Game {
 
 	/**
 	 * Constructor.
+	 * @param displayer The game displayer to use.
 	 * @param whitePlayerLogic The logic for the white player.
 	 * @param blackPlayerLogic The logic for the black player.
 	 */
-	public CheckersGame(Logic whitePlayerLogic, Logic blackPlayerLogic) {
+	public CheckersGame(GameDisplayer displayer, Logic whitePlayerLogic,
+			Logic blackPlayerLogic) {
 		board = new CheckersBoard();
+		disp = displayer;
 		wLogic = whitePlayerLogic;
 		bLogic = blackPlayerLogic;
 	}
@@ -29,6 +33,7 @@ public class CheckersGame implements Game {
 	@Override
 	public void start(Player player) {
 		CheckersPlayer p = (CheckersPlayer) player;
+		disp.display(board);
 		while (!isGameOver()) {
 			Move move = null;
 			switch (p) {
@@ -40,7 +45,9 @@ public class CheckersGame implements Game {
 				break;
 			}
 			board.makeMove(move);
+			disp.display(board);
 		}
+		disp.gameOver(board);
 	}
 
 	/**
@@ -55,6 +62,9 @@ public class CheckersGame implements Game {
 	/** The board the game is played upon. */
 	private CheckersBoard board;
 
+	/** The {@link GameDisplayer} to use for display. */
+	private GameDisplayer disp;
+	
 	/** The white player's logic. */
 	private Logic wLogic;
 	

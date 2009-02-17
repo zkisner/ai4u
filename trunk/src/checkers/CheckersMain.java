@@ -4,6 +4,8 @@ import games.Game;
 import utils.RandomUtils;
 import checkers.game.CheckersGame;
 import checkers.game.CheckersPlayer;
+import checkers.game.display.ConsoleDisplayer;
+import checkers.game.logics.computer.RandomMoveLogic;
 
 
 /**
@@ -18,8 +20,10 @@ public class CheckersMain {
 	 */
 	public static void main(String[] args) {
 		CheckersPlayer startingPlayer = rand.pickRandom(CheckersPlayer.class);
-		// TODO implement logics and init game with logics.
-		Game game = new CheckersGame(null, null);
+		Game game = new CheckersGame(
+				new ConsoleDisplayer(),
+				new RandomMoveLogic(),
+				new RandomMoveLogic());
 		game.start(startingPlayer);
 	}
 
