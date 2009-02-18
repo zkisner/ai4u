@@ -1,11 +1,11 @@
 package checkers;
 
 import games.Game;
+import games.logics.computer.RandomMoveLogic;
 import utils.RandomUtils;
 import checkers.game.CheckersGame;
 import checkers.game.CheckersPlayer;
 import checkers.game.display.ConsoleDisplayer;
-import checkers.game.logics.computer.RandomMoveLogic;
 
 
 /**
@@ -22,8 +22,8 @@ public class CheckersMain {
 		CheckersPlayer startingPlayer = rand.pickRandom(CheckersPlayer.class);
 		Game game = new CheckersGame(
 				new ConsoleDisplayer(),
-				new RandomMoveLogic(),
-				new RandomMoveLogic());
+				new RandomMoveLogic(CheckersPlayer.WHITE),
+				new RandomMoveLogic(CheckersPlayer.BLACK));
 		game.start(startingPlayer);
 	}
 

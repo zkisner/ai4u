@@ -54,15 +54,15 @@ public interface BitBoardConsts {
 	
 	/** The white's initial state - first 3 rows full. */
 	public static final int WHITE_INITIAL =
-		ROWS_FULL[0] |
-		ROWS_FULL[1] |
-		ROWS_FULL[2];
-	
-	/** The black's initial state - last 3 rows full. */
-	public static final int BLACK_INITIAL =
 		ROWS_FULL[7] |
 		ROWS_FULL[6] |
 		ROWS_FULL[5];
+	
+	/** The black's initial state - last 3 rows full. */
+	public static final int BLACK_INITIAL =
+		ROWS_FULL[0] |
+		ROWS_FULL[1] |
+		ROWS_FULL[2];
 	
 	/** An empty board. */
 	public static final int EMPTY = 0;

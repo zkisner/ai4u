@@ -1,8 +1,6 @@
 package utils;
 
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.Random;
+import java.util.*;
 
 /**
  * This is an extension for the {@link Random} file.

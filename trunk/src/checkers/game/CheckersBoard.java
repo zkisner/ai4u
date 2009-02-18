@@ -6,6 +6,7 @@ import java.util.List;
 
 import games.Board;
 import games.Move;
+import games.Player;
 
 /**
  * This is an implementation of the {@link Board}  interface for the checkers
@@ -22,13 +23,42 @@ public class CheckersBoard implements Board {
 	public void makeMove(Move move) {
 		// TODO not yet implemented
 	}
-	
+
 	/**
-	 * @see games.Board#getMoves()
+	 * The checkers game has forced moves when one player can jump over the
+	 * other's piece.
+	 * If no forced moves are available, simple moves are searched.
+	 * 
+	 * @see games.Board#getMoves(games.Player)
 	 */
 	@Override
-	public List<Move> getMoves() {
-		// TODO not yet implemented
+	public List<Move> getMoves(Player player) {
+		List<Move> moves = getJumps(player);
+		if (! moves.isEmpty()) {
+			return moves;
+		}
+		return getSlides(player);
+	}
+	
+	/**
+	 * Finds available jump moves for the given player.
+	 * Jumps are moves when a piece jumps over another one and kills it.
+	 * 
+	 * @param player The player whose turn it is. 
+	 */
+	private List<Move> getJumps(Player player) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/**
+	 * Finds available slide moves for the given player.
+	 * Slides are moves when a piece slides over to the next square.
+	 * 
+	 * @param player The player whose turn it is. 
+	 */
+	private List<Move> getSlides(Player player) {
+		// TODO Auto-generated method stub
 		return null;
 	}
 	

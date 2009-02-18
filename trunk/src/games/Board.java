@@ -15,8 +15,9 @@ public interface Board {
 	public void makeMove(Move move);
 
 	/**
+	 * @param player The player whose turn it is.
 	 * @return A List of the currently available moves.
 	 */
-	public List<Move> getMoves();
+	public List<Move> getMoves(Player player);
 	
 }
