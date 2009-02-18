@@ -12,14 +12,14 @@ public interface BitBoardConsts {
 	 * represents the number of the full row.
 	 */
 	public static final int[] ROWS_FULL = {
-		0xf0000000,
-		0x0f000000,
-		0x00f00000,
-		0x000f0000,
-		0x0000f000,
-		0x00000f00,
+		0x0000000f,
 		0x000000f0,
-		0x0000000f
+		0x00000f00,
+		0x0000f000,
+		0x000f0000,
+		0x00f00000,
+		0x0f000000,
+		0xf0000000
 	};
 	
 	/**
@@ -27,14 +27,14 @@ public interface BitBoardConsts {
 	 * represents the number of the full column.
 	 */
 	public static final int[] COLS_FULL = {
-		0x80808080,
-		0x08080808,
-		0x40404040,
-		0x04040404,
-		0x20202020,
-		0x02020202,
+		0x01010101,
 		0x10101010,
-		0x01010101
+		0x02020202,
+		0x20202020,
+		0x04040404,
+		0x40404040,
+		0x08080808,
+		0x80808080
 	};
 	
 	/**
@@ -42,14 +42,14 @@ public interface BitBoardConsts {
 	 * represents the number of the empty column.
 	 */
 	public static final int[] COLS_EMPTY = {
-		0x7f7f7f7f,
-		0xf7f7f7f7,
-		0xbfbfbfbf,
-		0xfbfbfbfb,
-		0xdfdfdfdf,
-		0xfdfdfdfd,
+		0xfefefefe,
 		0xefefefef,
-		0xfefefefe
+		0xfdfdfdfd,
+		0xdfdfdfdf,
+		0xfbfbfbfb,
+		0xbfbfbfbf,
+		0xf7f7f7f7,
+		0x7f7f7f7f
 	};
 	
 	/** The white's initial state - first 3 rows full. */
