@@ -47,7 +47,7 @@ public class CheckersBoard implements Board {
 	 * @param player The player whose turn it is. 
 	 */
 	private List<Move> getJumps(Player player) {
-		// TODO Auto-generated method stub
+		// find moves for regular pieces
 		return null;
 	}
 
@@ -65,14 +65,14 @@ public class CheckersBoard implements Board {
 	/** @return The white's state. */
 	public int getW() { return w; }
 	
-	/** @return The white checkers' state. */
-	public int getWc() { return wc; }
+	/** @return The white king's state. */
+	public int getWk() { return wk; }
 	
 	/** @return The black's state. */
 	public int getB() { return b; }
 	
-	/** @return The black checkers' state. */
-	public int getBc() { return bc; }
+	/** @return The black king's state. */
+	public int getBk() { return bk; }
 	
 	/** The white's board state. */
 	private int w = WHITE_INITIAL;
@@ -80,10 +80,10 @@ public class CheckersBoard implements Board {
 	/** The black's board state. */
 	private int b = BLACK_INITIAL;
 	
-	/** The white checkers' board state. */
-	private int wc = EMPTY;
+	/** The white king's board state. */
+	private int wk = EMPTY;
 	
-	/** The black checkers' board state. */
-	private int bc = EMPTY;
+	/** The black king's board state. */
+	private int bk = EMPTY;
 
 }

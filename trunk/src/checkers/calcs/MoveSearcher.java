@@ -34,9 +34,9 @@ public class MoveSearcher {
 	 */
 	public static int findEmptyCells(CheckersBoard board) {
 		return (board.getW() |
-				board.getWc() |
+				board.getWk() |
 				board.getB() |
-				board.getBc()) ^ FULL;
+				board.getBk()) ^ FULL;
 	}
 	
 }

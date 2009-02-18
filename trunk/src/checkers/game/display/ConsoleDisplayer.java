@@ -23,8 +23,8 @@ public class ConsoleDisplayer implements GameDisplayer {
 		for (int i = 0; i < 8; i++) {
 			int rowW  = b.getW()  >> (4*(7-i));
 			int rowB  = b.getB()  >> (4*(7-i));
-			int rowWc = b.getWc() >> (4*(7-i));
-			int rowBc = b.getBc() >> (4*(7-i));
+			int rowWc = b.getWk() >> (4*(7-i));
+			int rowBc = b.getBk() >> (4*(7-i));
 			
 			System.out.print(8-i + "|");
 			if ((i&1) == 0) System.out.print(" _");
