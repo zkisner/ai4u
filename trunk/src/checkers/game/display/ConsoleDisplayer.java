@@ -19,47 +19,21 @@ public class ConsoleDisplayer implements GameDisplayer {
 	@Override
 	public void display(Board board) {
 		CheckersBoard b = (CheckersBoard) board;
+		
 		System.out.println("  a b c d e f g h");
 		for (int i = 0; i < 8; i++) {
-			int rowW  = b.getW()  >> (4*(7-i));
-			int rowB  = b.getB()  >> (4*(7-i));
-			int rowWc = b.getWk() >> (4*(7-i));
-			int rowBc = b.getBk() >> (4*(7-i));
-			
+			long mask = 1L << (8*(7-i));
 			System.out.print(8-i + "|");
-			if ((i&1) == 0) System.out.print(" _");
-			
-			if ((rowW&8) != 0) System.out.print('w');
-			else if ((rowB&8)  != 0) System.out.print('b');
-			else if ((rowWc&8) != 0) System.out.print('W');
-			else if ((rowBc&8) != 0) System.out.print('B');
-			else System.out.print(' ');
-			
-			System.out.print("_ _");
-			
-			if ((rowW&4) != 0) System.out.print('w');
-			else if ((rowB&4)  != 0) System.out.print('b');
-			else if ((rowWc&4) != 0) System.out.print('W');
-			else if ((rowBc&4) != 0) System.out.print('B');
-			else System.out.print(' ');
-			
-			System.out.print("_ _");
-			
-			if ((rowW&2) != 0) System.out.print('w');
-			else if ((rowB&2)  != 0) System.out.print('b');
-			else if ((rowWc&2) != 0) System.out.print('W');
-			else if ((rowBc&2) != 0) System.out.print('B');
-			else System.out.print(' ');
-			
-			System.out.print("_ _");
-			
-			if ((rowW&1) != 0) System.out.print('w');
-			else if ((rowB&1)  != 0) System.out.print('b');
-			else if ((rowWc&1) != 0) System.out.print('W');
-			else if ((rowBc&1) != 0) System.out.print('B');
-			else System.out.print(' ');
-			
-			if ((i&1) == 1) System.out.print("_ ");
+			for (int j = 0; j < 8; j++) {
+				if ((b.getW()&mask) != 0) System.out.print('w');
+				else if ((b.getB()&mask)  != 0) System.out.print('b');
+				else if ((b.getWk()&mask) != 0) System.out.print('W');
+				else if ((b.getBk()&mask) != 0) System.out.print('B');
+				else System.out.print(' ');
+				System.out.print(' ');
+				
+				mask <<= 1;
+			}
 			System.out.print("|" + (8-i));
 			
 			System.out.println();

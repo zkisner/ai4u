@@ -7,13 +7,10 @@ import checkers.game.CheckersGame;
 import checkers.game.CheckersPlayer;
 import checkers.game.display.ConsoleDisplayer;
 
-
 /**
  * @author kreich
  */
 public class CheckersMain {
-
-	private static RandomUtils rand = new RandomUtils();
 
 	/**
 	 * @param args
@@ -27,4 +24,7 @@ public class CheckersMain {
 		game.start(startingPlayer);
 	}
 
+	/** A random generator. */
+	private static RandomUtils rand = new RandomUtils();
+	
 }

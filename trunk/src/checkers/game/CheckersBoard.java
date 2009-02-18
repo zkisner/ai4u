@@ -2,7 +2,7 @@ package checkers.game;
 
 import static checkers.calcs.BitBoardConsts.*;
 
-import java.util.List;
+import java.util.*;
 
 import games.Board;
 import games.Move;
@@ -45,9 +45,72 @@ public class CheckersBoard implements Board {
 	 * Jumps are moves when a piece jumps over another one and kills it.
 	 * 
 	 * @param player The player whose turn it is. 
+	 * @return A list of the found moves.
 	 */
 	private List<Move> getJumps(Player player) {
+		List<Move> moves = new ArrayList<Move>();
 		// find moves for regular pieces
+		if (player.equals(CheckersPlayer.WHITE)) {
+			moves.addAll(getJumpsDown(w|wk, b|bk));
+			moves.addAll(getJumpsUp(wk, b|bk));
+		} else {
+			moves.addAll(getJumpsUp(b|bk, w|wk));
+			moves.addAll(getJumpsDown(bk, w|wk));			
+		}
+		return moves;
+	}
+
+	/**
+	 * @param tools The players pieces.
+	 * @param enemies The enemy's pieces.
+	 * @return A list of the found moves.
+	 */
+	private List<Move> getJumpsUp(long tools, long enemies) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	/**
+	 * Finds jumps down that can be made by the given tools over the enemies.
+	 * 
+	 * @param tools The players pieces.
+	 * @param enemies The enemy's pieces.
+	 * @return A list of the found moves.
+	 */
+	private List<Move> getJumpsDown(long tools, long enemies) {
+		List<Move> moves = getJumpsDownRight(tools, enemies);
+		moves.addAll(getJumpsDownLeft(tools, enemies));
+		return moves;
+	}
+
+	/**
+	 * Finds all jumps that can be made by the given tools over the enemies.
+	 * First removes all tools in columns g and h since they have no room to jump.
+	 * Then checks for tools standing next to an enemy (down right).
+	 * Finally checks the next step lands in a free square.
+	 * 
+	 * @param tools The players pieces.
+	 * @param enemies The enemy's pieces.
+	 * @return A list of the found moves.
+	 */
+	private List<Move> getJumpsDownRight(long tools, long enemies) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	/**
+	 * Finds all jumps that can be made by the given tools over the enemies.
+	 * First removes all tools in columns a and b and rows 1 and 2 since they
+	 * have no room to jump.
+	 * Then checks for tools standing next to an enemy (down left).
+	 * Finally checks the next step lands in a free square.
+	 * 
+	 * @param tools The players pieces.
+	 * @param enemies The enemy's pieces.
+	 * @return A list of the found moves.
+	 */
+	private List<Move> getJumpsDownLeft(long tools, long enemies) {
+//		long cells = (tools & JUMP_DOWN_LEFT_MASK);
 		return null;
 	}
 
@@ -56,6 +119,7 @@ public class CheckersBoard implements Board {
 	 * Slides are moves when a piece slides over to the next square.
 	 * 
 	 * @param player The player whose turn it is. 
+	 * @return A list of the found moves.
 	 */
 	private List<Move> getSlides(Player player) {
 		// TODO Auto-generated method stub
@@ -63,27 +127,27 @@ public class CheckersBoard implements Board {
 	}
 	
 	/** @return The white's state. */
-	public int getW() { return w; }
+	public long getW() { return w; }
 	
 	/** @return The white king's state. */
-	public int getWk() { return wk; }
+	public long getWk() { return wk; }
 	
 	/** @return The black's state. */
-	public int getB() { return b; }
+	public long getB() { return b; }
 	
 	/** @return The black king's state. */
-	public int getBk() { return bk; }
+	public long getBk() { return bk; }
 	
 	/** The white's board state. */
-	private int w = WHITE_INITIAL;
+	private long w = WHITE_INITIAL;
 	
 	/** The black's board state. */
-	private int b = BLACK_INITIAL;
+	private long b = BLACK_INITIAL;
 	
 	/** The white king's board state. */
-	private int wk = EMPTY;
+	private long wk = EMPTY;
 	
 	/** The black king's board state. */
-	private int bk = EMPTY;
+	private long bk = EMPTY;
 
 }
