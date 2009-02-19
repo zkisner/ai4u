@@ -16,6 +16,8 @@ public class RandomUtils extends Random {
 	 * @return A random element from the {@link Collection}.
 	 */
 	public <T> T pickRandom(Collection<T> collection) {
+		if (collection.isEmpty()) return null;
+		
 		Iterator<T> iter = collection.iterator();
 		int randIndex = nextInt(collection.size());
 		
