@@ -4,6 +4,8 @@ import static checkers.calcs.BitBoardConsts.*;
 
 import java.util.*;
 
+import utils.BitUtils;
+
 import games.Board;
 import games.Move;
 import games.Player;
@@ -21,7 +23,7 @@ public class CheckersBoard implements Board {
 	 */
 	@Override
 	public void makeMove(Move move) {
-		// TODO not yet implemented
+		throw new UnsupportedOperationException("not yet implemented");
 	}
 
 	/**
@@ -49,7 +51,6 @@ public class CheckersBoard implements Board {
 	 */
 	private List<Move> getJumps(Player player) {
 		List<Move> moves = new ArrayList<Move>();
-		// find moves for regular pieces
 		if (player.equals(CheckersPlayer.WHITE)) {
 			moves.addAll(getJumpsDown(w|wk, b|bk));
 			moves.addAll(getJumpsUp(wk, b|bk));
@@ -66,8 +67,57 @@ public class CheckersBoard implements Board {
 	 * @return A list of the found moves.
 	 */
 	private List<Move> getJumpsUp(long tools, long enemies) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Move> moves = getJumpsUpRight(tools, enemies);
+		moves.addAll(getJumpsUpLeft(tools, enemies));
+		return moves;
+	}
+	
+	/**
+	 * Finds all jumps that can be made by the given tools over the enemies.
+	 * First removes all tools in columns g and h and rows 7 and 8 since they
+	 * have no room to jump.
+	 * Then checks for tools standing next to an enemy (up right).
+	 * Finally checks the next step lands in a free square.
+	 * 
+	 * @param tools The players pieces.
+	 * @param enemies The enemy's pieces.
+	 * @return A list of the found moves.
+	 */
+	private List<Move> getJumpsUpRight(long tools, long enemies) {
+		long cells = ((((tools & JUMP_UP_RIGHT_MASK) << 9) & enemies) << 9) &
+					 BitUtils.flip(w|b|wk|bk);
+		
+		List<Move> moves = new ArrayList<Move>();
+		while (cells != EMPTY) {
+			long square = Long.lowestOneBit(cells);
+			moves.add(new CheckersMove(square >>> 18, square));
+			cells ^= square;
+		}
+		return moves;
+	}
+	
+	/**
+	 * Finds all jumps that can be made by the given tools over the enemies.
+	 * First removes all tools in columns a and b and rows 7 and 8 since they
+	 * have no room to jump.
+	 * Then checks for tools standing next to an enemy (up left).
+	 * Finally checks the next step lands in a free square.
+	 * 
+	 * @param tools The players pieces.
+	 * @param enemies The enemy's pieces.
+	 * @return A list of the found moves.
+	 */
+	private List<Move> getJumpsUpLeft(long tools, long enemies) {
+		long cells = ((((tools & JUMP_UP_LEFT_MASK) << 7) & enemies) << 7) &
+					 BitUtils.flip(w|b|wk|bk);
+		
+		List<Move> moves = new ArrayList<Move>();
+		while (cells != EMPTY) {
+			long square = Long.lowestOneBit(cells);
+			moves.add(new CheckersMove(square >>> 14, square));
+			cells ^= square;
+		}
+		return moves;
 	}
 	
 	/**
@@ -85,7 +135,8 @@ public class CheckersBoard implements Board {
 
 	/**
 	 * Finds all jumps that can be made by the given tools over the enemies.
-	 * First removes all tools in columns g and h since they have no room to jump.
+	 * First removes all tools in columns g and h and rows 1 and 2 since they
+	 * have no room to jump.
 	 * Then checks for tools standing next to an enemy (down right).
 	 * Finally checks the next step lands in a free square.
 	 * 
@@ -94,8 +145,16 @@ public class CheckersBoard implements Board {
 	 * @return A list of the found moves.
 	 */
 	private List<Move> getJumpsDownRight(long tools, long enemies) {
-		// TODO Auto-generated method stub
-		return null;
+		long cells = ((((tools & JUMP_DOWN_RIGHT_MASK) >>> 7) & enemies) >>> 7) &
+					 BitUtils.flip(w|b|wk|bk);
+		
+		List<Move> moves = new ArrayList<Move>();
+		while (cells != EMPTY) {
+			long square = Long.lowestOneBit(cells);
+			moves.add(new CheckersMove(square << 14, square));
+			cells ^= square;
+		}
+		return moves;
 	}
 	
 	/**
@@ -110,8 +169,16 @@ public class CheckersBoard implements Board {
 	 * @return A list of the found moves.
 	 */
 	private List<Move> getJumpsDownLeft(long tools, long enemies) {
-//		long cells = (tools & JUMP_DOWN_LEFT_MASK);
-		return null;
+		long cells = ((((tools & JUMP_DOWN_LEFT_MASK) >>> 9) & enemies) >>> 9) &
+		             BitUtils.flip(w|b|wk|bk);
+		
+		List<Move> moves = new ArrayList<Move>();
+		while (cells != EMPTY) {
+			long square = Long.lowestOneBit(cells);
+			moves.add(new CheckersMove(square << 18, square));
+			cells ^= square;
+		}
+		return moves;
 	}
 
 	/**
@@ -122,8 +189,125 @@ public class CheckersBoard implements Board {
 	 * @return A list of the found moves.
 	 */
 	private List<Move> getSlides(Player player) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Move> moves = new ArrayList<Move>();
+		if (player.equals(CheckersPlayer.WHITE)) {
+			moves.addAll(getSlidesDown(w|wk));
+			moves.addAll(getSlidesUp(wk));
+		} else {
+			moves.addAll(getSlidesUp(b|bk));
+			moves.addAll(getSlidesDown(bk));			
+		}
+		return moves;
+	}
+	
+	/**
+	 * @param tools The players pieces.
+	 * @return A list of the found moves.
+	 */
+	private List<Move> getSlidesUp(long tools) {
+		List<Move> moves = getSlidesUpRight(tools);
+		moves.addAll(getSlidesUpLeft(tools));
+		return moves;
+	}
+	
+	/**
+	 * Finds all slides that can be made by the given tools.
+	 * First removes all tools in column h and row 8 since they have no room to
+	 * slide.
+	 * Then checks for tools standing next to an empty square (up right).
+	 * 
+	 * @param tools The players pieces.
+	 * @return A list of the found moves.
+	 */
+	private List<Move> getSlidesUpRight(long tools) {
+		long cells = ((tools & SLIDE_UP_RIGHT_MASK) << 9) &
+					 BitUtils.flip(w|b|wk|bk);
+		
+		List<Move> moves = new ArrayList<Move>();
+		while (cells != EMPTY) {
+			long square = Long.lowestOneBit(cells);
+			moves.add(new CheckersMove(square >>> 9, square));
+			cells ^= square;
+		}
+		return moves;
+	}
+	
+	/**
+	 * Finds all slides that can be made by the given tools.
+	 * First removes all tools in column a and row 8 since they have no room to
+	 * slide.
+	 * Then checks for tools standing next to an empty square (up left).
+	 * 
+	 * @param tools The players pieces.
+	 * @return A list of the found moves.
+	 */
+	private List<Move> getSlidesUpLeft(long tools) {
+		long cells = ((tools & SLIDE_UP_LEFT_MASK) << 7) &
+					 BitUtils.flip(w|b|wk|bk);
+		
+		List<Move> moves = new ArrayList<Move>();
+		while (cells != EMPTY) {
+			long square = Long.lowestOneBit(cells);
+			moves.add(new CheckersMove(square >>> 7, square));
+			cells ^= square;
+		}
+		return moves;
+	}
+	
+	/**
+	 * Finds slides down that can be made by the given tools.
+	 * 
+	 * @param tools The players pieces.
+	 * @return A list of the found moves.
+	 */
+	private List<Move> getSlidesDown(long tools) {
+		List<Move> moves = getSlidesDownRight(tools);
+		moves.addAll(getSlidesDownLeft(tools));
+		return moves;
+	}
+
+	/**
+	 * Finds all slides that can be made by the given tools.
+	 * First removes all tools in column h and row 1 since they have no room to
+	 * slide.
+	 * Then checks for tools standing next to an empty square (down right).
+	 * 
+	 * @param tools The players pieces.
+	 * @return A list of the found moves.
+	 */
+	private List<Move> getSlidesDownRight(long tools) {
+		long cells = ((tools & SLIDE_DOWN_RIGHT_MASK) >>> 7) &
+					 BitUtils.flip(w|b|wk|bk);
+		
+		List<Move> moves = new ArrayList<Move>();
+		while (cells != EMPTY) {
+			long square = Long.lowestOneBit(cells);
+			moves.add(new CheckersMove(square << 7, square));
+			cells ^= square;
+		}
+		return moves;
+	}
+	
+	/**
+	 * Finds all slides that can be made by the given tools.
+	 * First removes all tools in column a and row 1 since they have no room to
+	 * slide.
+	 * Then checks for tools standing next to an empty square (down left).
+	 * 
+	 * @param tools The players pieces.
+	 * @return A list of the found moves.
+	 */
+	private List<Move> getSlidesDownLeft(long tools) {
+		long cells = ((tools & SLIDE_DOWN_LEFT_MASK) >>> 9) &
+		             BitUtils.flip(w|b|wk|bk);
+		
+		List<Move> moves = new ArrayList<Move>();
+		while (cells != EMPTY) {
+			long square = Long.lowestOneBit(cells);
+			moves.add(new CheckersMove(square << 9, square));
+			cells ^= square;
+		}
+		return moves;
 	}
 	
 	/** @return The white's state. */

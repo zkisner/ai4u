@@ -1,5 +1,6 @@
 package checkers.game;
 
+import checkers.calcs.BitBoardConsts;
 import games.Game;
 import games.Logic;
 import games.Move;
@@ -55,8 +56,8 @@ public class CheckersGame implements Game {
 	 */
 	@Override
 	public boolean isGameOver() {
-		// TODO not yet implemented
-		return false;
+		return (board.getW()|board.getWk()) == BitBoardConsts.EMPTY ||
+			   (board.getB()|board.getBk()) == BitBoardConsts.EMPTY;
 	}
 	
 	/** The board the game is played upon. */

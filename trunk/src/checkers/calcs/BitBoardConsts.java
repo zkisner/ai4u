@@ -150,5 +150,38 @@ public interface BitBoardConsts {
 	 */
 	public static final long JUMP_UP_RIGHT_MASK =
 		COLS_EMPTY[COLG] & COLS_EMPTY[COLH] & ROWS_EMPTY[ROW7] & ROWS_EMPTY[ROW8];
+
+	/**
+	 * This is a mask for slides down left:
+	 * column a is empty.
+	 * row 1 is empty. 
+	 */
+	public static final long SLIDE_DOWN_LEFT_MASK =
+		COLS_EMPTY[COLA] & ROWS_EMPTY[ROW1];
+	
+	/**
+	 * This is a mask for slides down right:
+	 * column h is empty.
+	 * row 1 is empty. 
+	 */
+	public static final long SLIDE_DOWN_RIGHT_MASK =
+		COLS_EMPTY[COLH] & ROWS_EMPTY[ROW1];
+	
+	/**
+	 * This is a mask for slides up left:
+	 * column a is empty.
+	 * row 8 is empty. 
+	 */
+	public static final long SLIDE_UP_LEFT_MASK =
+		COLS_EMPTY[COLA] & ROWS_EMPTY[ROW8];
+	
+	/**
+	 * This is a mask for slides up right:
+	 * column h is empty.
+	 * row 8 is empty. 
+	 */
+	public static final long SLIDE_UP_RIGHT_MASK =
+		COLS_EMPTY[COLH] & ROWS_EMPTY[ROW8];
+
 	
 }
