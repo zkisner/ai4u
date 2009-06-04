@@ -21,7 +21,6 @@ public class RandomMoveLogic implements Logic {
 	/**
 	 * @see games.Logic#pickMove(games.Board)
 	 */
-	@Override
 	public Move pickMove(Board board) {
 		return rand.pickRandom(board.getMoves(role));
 	}

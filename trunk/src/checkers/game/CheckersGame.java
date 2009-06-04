@@ -31,7 +31,6 @@ public class CheckersGame implements Game {
 	/**
 	 * @see games.Game#start(games.Player)
 	 */
-	@Override
 	public void start(Player player) {
 		CheckersPlayer p = (CheckersPlayer) player;
 		disp.display(board);
@@ -54,7 +53,6 @@ public class CheckersGame implements Game {
 	/**
 	 * @see games.Game#isGameOver()
 	 */
-	@Override
 	public boolean isGameOver() {
 		return (board.getW()|board.getWk()) == BitBoardConsts.EMPTY ||
 			   (board.getB()|board.getBk()) == BitBoardConsts.EMPTY;

@@ -18,6 +18,20 @@ public class CheckersMove implements Move {
 		this.from = from;
 		this.to = to;
 	}
+	
+	/**
+	 * @return The place to move from.
+	 */
+	public long getFrom() {
+		return from;
+	}
+	
+	/**
+	 * @return The place to move to.
+	 */
+	public long getTo() {
+		return to;
+	}
 
 	/** The square to move from. */
 	private long from;

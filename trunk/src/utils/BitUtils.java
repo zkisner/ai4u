@@ -21,14 +21,4 @@ public class BitUtils {
 		return b.toString();
 	}
 	
-	/**
-	 * @param n The number whose bytes we want to flip.
-	 * @return A long whose bits were flipped, turning 1->0 and 0->1.
-	 */
-	public static long flip(long n) {
-		return n ^ ALL_ONES64;
-	}
-	
-	/** A long with all 64 bits lit. */
-	public static final long ALL_ONES64 = 0xffffffffffffffffL;
 }

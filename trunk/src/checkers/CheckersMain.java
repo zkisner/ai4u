@@ -13,7 +13,7 @@ import checkers.game.display.ConsoleDisplayer;
 public class CheckersMain {
 
 	/**
-	 * @param args
+	 * @param args The arguments given to the program.
 	 */
 	public static void main(String[] args) {
 		CheckersPlayer startingPlayer = rand.pickRandom(CheckersPlayer.class);

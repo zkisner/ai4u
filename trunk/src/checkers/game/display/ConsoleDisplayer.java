@@ -16,7 +16,6 @@ public class ConsoleDisplayer implements GameDisplayer {
 	 * 
 	 * @see games.display.GameDisplayer#display(games.Board)
 	 */
-	@Override
 	public void display(Board board) {
 		CheckersBoard b = (CheckersBoard) board;
 		
@@ -45,7 +44,6 @@ public class ConsoleDisplayer implements GameDisplayer {
 	 * Prints an announcement about the game's end.
 	 * @see games.display.GameDisplayer#gameOver(checkers.game.CheckersBoard)
 	 */
-	@Override
 	public void gameOver(CheckersBoard board) {
 		System.out.println("\nGAME OVER!");
 	}

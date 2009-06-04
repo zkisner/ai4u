@@ -1,14 +1,10 @@
 package checkers.game;
 
 import static checkers.calcs.BitBoardConsts.*;
+import games.*;
 
-import java.util.*;
-
-import utils.BitUtils;
-
-import games.Board;
-import games.Move;
-import games.Player;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * This is an implementation of the {@link Board}  interface for the checkers
@@ -21,7 +17,6 @@ public class CheckersBoard implements Board {
 	/**
 	 * @see games.Board#makeMove(games.Move)
 	 */
-	@Override
 	public void makeMove(Move move) {
 		throw new UnsupportedOperationException("not yet implemented");
 	}
@@ -33,7 +28,6 @@ public class CheckersBoard implements Board {
 	 * 
 	 * @see games.Board#getMoves(games.Player)
 	 */
-	@Override
 	public List<Move> getMoves(Player player) {
 		List<Move> moves = getJumps(player);
 		if (! moves.isEmpty()) {
@@ -85,7 +79,7 @@ public class CheckersBoard implements Board {
 	 */
 	private List<Move> getJumpsUpRight(long tools, long enemies) {
 		long cells = ((((tools & JUMP_UP_RIGHT_MASK) << 9) & enemies) << 9) &
-					 BitUtils.flip(w|b|wk|bk);
+					 ~(w|b|wk|bk);
 		
 		List<Move> moves = new ArrayList<Move>();
 		while (cells != EMPTY) {
@@ -109,7 +103,7 @@ public class CheckersBoard implements Board {
 	 */
 	private List<Move> getJumpsUpLeft(long tools, long enemies) {
 		long cells = ((((tools & JUMP_UP_LEFT_MASK) << 7) & enemies) << 7) &
-					 BitUtils.flip(w|b|wk|bk);
+					 ~(w|b|wk|bk);
 		
 		List<Move> moves = new ArrayList<Move>();
 		while (cells != EMPTY) {
@@ -146,7 +140,7 @@ public class CheckersBoard implements Board {
 	 */
 	private List<Move> getJumpsDownRight(long tools, long enemies) {
 		long cells = ((((tools & JUMP_DOWN_RIGHT_MASK) >>> 7) & enemies) >>> 7) &
-					 BitUtils.flip(w|b|wk|bk);
+					 ~(w|b|wk|bk);
 		
 		List<Move> moves = new ArrayList<Move>();
 		while (cells != EMPTY) {
@@ -170,7 +164,7 @@ public class CheckersBoard implements Board {
 	 */
 	private List<Move> getJumpsDownLeft(long tools, long enemies) {
 		long cells = ((((tools & JUMP_DOWN_LEFT_MASK) >>> 9) & enemies) >>> 9) &
-		             BitUtils.flip(w|b|wk|bk);
+		             ~(w|b|wk|bk);
 		
 		List<Move> moves = new ArrayList<Move>();
 		while (cells != EMPTY) {
@@ -221,7 +215,7 @@ public class CheckersBoard implements Board {
 	 */
 	private List<Move> getSlidesUpRight(long tools) {
 		long cells = ((tools & SLIDE_UP_RIGHT_MASK) << 9) &
-					 BitUtils.flip(w|b|wk|bk);
+					 ~(w|b|wk|bk);
 		
 		List<Move> moves = new ArrayList<Move>();
 		while (cells != EMPTY) {
@@ -243,7 +237,7 @@ public class CheckersBoard implements Board {
 	 */
 	private List<Move> getSlidesUpLeft(long tools) {
 		long cells = ((tools & SLIDE_UP_LEFT_MASK) << 7) &
-					 BitUtils.flip(w|b|wk|bk);
+					 ~(w|b|wk|bk);
 		
 		List<Move> moves = new ArrayList<Move>();
 		while (cells != EMPTY) {
@@ -277,7 +271,7 @@ public class CheckersBoard implements Board {
 	 */
 	private List<Move> getSlidesDownRight(long tools) {
 		long cells = ((tools & SLIDE_DOWN_RIGHT_MASK) >>> 7) &
-					 BitUtils.flip(w|b|wk|bk);
+					 ~(w|b|wk|bk);
 		
 		List<Move> moves = new ArrayList<Move>();
 		while (cells != EMPTY) {
@@ -299,7 +293,7 @@ public class CheckersBoard implements Board {
 	 */
 	private List<Move> getSlidesDownLeft(long tools) {
 		long cells = ((tools & SLIDE_DOWN_LEFT_MASK) >>> 9) &
-		             BitUtils.flip(w|b|wk|bk);
+		             ~(w|b|wk|bk);
 		
 		List<Move> moves = new ArrayList<Move>();
 		while (cells != EMPTY) {
