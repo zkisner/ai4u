@@ -9,6 +9,17 @@ import games.Move;
  */
 public class CheckersMove implements Move {
 
+	/* --- Members --- */
+	
+	/** The square to move from. */
+	private long from;
+	
+	/** The square to move to. */
+	private long to;
+
+	
+	/* --- Constructor --- */
+	
 	/**
 	 * Constructor.
 	 * @param from The square to move from.
@@ -18,6 +29,9 @@ public class CheckersMove implements Move {
 		this.from = from;
 		this.to = to;
 	}
+	
+	
+	/* --- Access Methods --- */
 	
 	/**
 	 * @return The place to move from.
@@ -32,11 +46,16 @@ public class CheckersMove implements Move {
 	public long getTo() {
 		return to;
 	}
-
-	/** The square to move from. */
-	private long from;
 	
-	/** The square to move to. */
-	private long to;
+	
+	/* --- Overridden Methods --- */
+	
+	/**
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return super.toString();
+	}
 	
 }

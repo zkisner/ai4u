@@ -1,6 +1,5 @@
 package games.display;
 
-import checkers.game.CheckersBoard;
 import games.Board;
 
 /**
@@ -21,6 +20,6 @@ public interface GameDisplayer {
 	 * Announces the end of the game.
 	 * @param board The board.
 	 */
-	public void gameOver(CheckersBoard board);
+	public void gameOver(Board board);
 	
 }

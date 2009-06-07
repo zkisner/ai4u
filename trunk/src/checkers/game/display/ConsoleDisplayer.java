@@ -42,9 +42,9 @@ public class ConsoleDisplayer implements GameDisplayer {
 	
 	/**
 	 * Prints an announcement about the game's end.
-	 * @see games.display.GameDisplayer#gameOver(checkers.game.CheckersBoard)
+	 * @see games.display.GameDisplayer#gameOver(Board)
 	 */
-	public void gameOver(CheckersBoard board) {
+	public void gameOver(Board board) {
 		System.out.println("\nGAME OVER!");
 	}
 
