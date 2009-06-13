@@ -2,7 +2,6 @@ package tictactoe;
 
 import games.Game;
 import games.logics.computer.RandomMoveLogic;
-import checkers.game.display.ConsoleDisplayer;
 
 /**
  * @author igalk

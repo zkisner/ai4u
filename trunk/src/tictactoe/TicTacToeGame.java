@@ -37,7 +37,77 @@ public class TicTacToeGame implements Game {
 	 * @see games.Game#isGameOver()
 	 */
 	public boolean isGameOver() {
-		throw new RuntimeException("not yet implemented");
+		int size = board.getSize();
+		// check rows
+		for (int row = 0; row < size; row++) {
+			int first = board.getCell(row, 0);
+			if (first != TicTacToeBoard.EMPTY) {
+				boolean same = true;
+				for (int col = 1; col < size; col++) {
+					if (board.getCell(row, col) != first) {
+						same = false;
+						break;
+					}
+				}
+				if (same) {
+					return true;
+				}
+			}
+		}
+		// check columns
+		for (int col = 0; col < size; col++) {
+			int first = board.getCell(0, col);
+			if (first != TicTacToeBoard.EMPTY) {
+				boolean same = true;
+				for (int row = 1; row < size; row++) {
+					if (board.getCell(row, col) != first) {
+						same = false;
+						break;
+					}
+				}
+				if (same) {
+					return true;
+				}
+			}
+		}
+		// check main diagonal
+		int first = board.getCell(0, 0);
+		if (first != TicTacToeBoard.EMPTY) {
+			boolean same = true;
+			for (int i = 1; i < size; i++) {
+				if (board.getCell(i, i) != first) {
+					same = false;
+					break;
+				}
+			}
+			if (same) {
+				return true;
+			}
+		}
+		// check secondary diagonal
+		int last = size-1;
+		first = board.getCell(0, last);
+		if (first != TicTacToeBoard.EMPTY) {
+			boolean same = true;
+			for (int i = 1; i < size; i++) {
+				if (board.getCell(i, last-i) != first) {
+					same = false;
+					break;
+				}
+			}
+			if (same) {
+				return true;
+			}
+		}
+		// check whether there are empty cells left
+		for (int i = 0; i < size; i++) {
+			for (int j = 0; j < size; j++) {
+				if (board.getCell(i, j) == TicTacToeBoard.EMPTY) {
+					return false;
+				}
+			}
+		}
+		return true;
 	}
 
 	/**
@@ -58,6 +128,8 @@ public class TicTacToeGame implements Game {
 			}
 			board.makeMove(move);
 			disp.display(board);
+			p = p.equals(TicTacToePlayer.X) ?
+					TicTacToePlayer.O : TicTacToePlayer.X;
 		}
 		disp.gameOver(board);
 	}
