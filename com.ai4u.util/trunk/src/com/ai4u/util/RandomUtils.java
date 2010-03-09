@@ -9,6 +9,8 @@ import java.util.*;
  */
 public class RandomUtils extends Random {
 
+	private static final long serialVersionUID = 1L;
+
 	/**
 	 * Picks a random element from the given {@link Collection}.
 	 * @param <T> The type of the elements in the {@link Collection}.
