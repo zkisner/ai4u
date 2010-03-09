@@ -1,6 +1,7 @@
 package com.ai4u.core.logic.computer;
 
 import com.ai4u.core.*;
+import com.ai4u.core.logic.Logic;
 import com.ai4u.util.RandomUtils;
 
 /**
@@ -19,9 +20,9 @@ public class RandomMoveLogic implements Logic {
 	}
 	
 	/**
-	 * @see com.ai4u.core.Logic#pickMove(com.ai4u.core.Board)
+	 * @see com.ai4u.core.logic.Logic#pickMove(com.ai4u.core.GameState)
 	 */
-	public Move pickMove(Board board) {
+	public Move pickMove(GameState board) {
 		return rand.pickRandom(board.getMoves(role));
 	}
 	

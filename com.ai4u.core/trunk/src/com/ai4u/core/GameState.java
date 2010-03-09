@@ -7,17 +7,25 @@ import java.util.List;
  * 
  * @author kreich
  */
-public interface Board {
+public interface GameState extends Cloneable {
 
 	/**
 	 * @param move The move to make.
+	 * @return The new game state, after the move is made.
 	 */
-	public void makeMove(Move move);
+	public GameState makeMove(Move move);
 
 	/**
 	 * @param player The player whose turn it is.
 	 * @return A List of the currently available moves.
 	 */
 	public List<Move> getMoves(Player player);
+	
+	/**
+	 * @return The player whose next turn it is.
+	 */
+	public Player getNextPlaying();
+	
+	public GameState clone();
 	
 }
