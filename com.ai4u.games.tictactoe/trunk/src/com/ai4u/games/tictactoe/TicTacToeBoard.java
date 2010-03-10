@@ -61,15 +61,18 @@ public class TicTacToeBoard implements GameState {
 	public TicTacToeBoard makeMove(Move move) {
 		TicTacToeMove m = (TicTacToeMove) move;
 		
-		TicTacToeBoard copy = this.clone();
-		copy.cells[m.getI()][m.getJ()] = copy.nextPlayer.equals(TicTacToePlayer.X) ?
-				X : O;
-		copy.nextPlayer = copy.nextPlayer.equals(TicTacToePlayer.X) ?
+		cells[m.getI()][m.getJ()] = nextPlayer.equals(TicTacToePlayer.X) ? X : O;
+		nextPlayer = nextPlayer.equals(TicTacToePlayer.X) ?
 				TicTacToePlayer.X : TicTacToePlayer.O;
 		
-		return copy;
+		return this;
 	}
 	
+	public GameState simulateMove(Move move) {
+		TicTacToeBoard copy = this.clone();
+		return copy.makeMove(move);
+	}
+
 	public Player getNextPlaying() {
 		return nextPlayer;
 	}

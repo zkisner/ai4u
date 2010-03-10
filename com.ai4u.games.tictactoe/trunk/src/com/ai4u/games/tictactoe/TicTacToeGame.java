@@ -2,7 +2,6 @@ package com.ai4u.games.tictactoe;
 
 import com.ai4u.core.Game;
 import com.ai4u.core.Move;
-import com.ai4u.core.Player;
 import com.ai4u.core.display.GameDisplayer;
 import com.ai4u.core.logic.Logic;
 
@@ -19,6 +18,12 @@ public class TicTacToeGame implements Game {
 	private Logic xLogic;
 	/** The logic for the player playing o. */
 	private Logic oLogic;
+	/** Pre Calculations. */
+	private long[] rows;
+	private long[] cols;
+	private long mainDiag;
+	private long secDiag;
+	private long fullBoard;
 
 	/**
 	 * Constructor.
@@ -31,9 +36,33 @@ public class TicTacToeGame implements Game {
 	public TicTacToeGame(int size, GameDisplayer displayer, Logic logic4x,
 			Logic logic4o) {
 		board = new TicTacToeBoard(size);
+		preCalcs(size);
 		disp = displayer;
 		xLogic = logic4x;
 		oLogic = logic4o;
+	}
+
+	private void preCalcs(int size) {
+		rows = new long[size];
+		cols = new long[size];
+		// init counters
+		for (int i = 0; i < size; i++) {
+			rows[i] = 0;
+			cols[i] = 0;
+		}
+		mainDiag = 0;
+		secDiag = 0;
+		// calc sums
+		for (int i = 0; i < size*size; i++) {
+			long val = 1 << i;
+			int row = i/size;
+			int col = i%size;
+			rows[row] |= val;
+			cols[col] |= val;
+			if (row == col) mainDiag |= val;
+			if (row+col == size-1) secDiag |= val;
+		}
+		fullBoard = (1 << size*size) - 1;
 	}
 
 	/**
@@ -41,87 +70,52 @@ public class TicTacToeGame implements Game {
 	 */
 	public boolean isGameOver() {
 		int size = board.getSize();
-		// check rows
-		for (int row = 0; row < size; row++) {
-			int first = board.getCell(row, 0);
-			if (first != TicTacToeBoard.EMPTY) {
-				boolean same = true;
-				for (int col = 1; col < size; col++) {
-					if (board.getCell(row, col) != first) {
-						same = false;
-						break;
-					}
-				}
-				if (same) {
-					return true;
+		// sum all cells with powers of 2
+		long sumX = 0;
+		long sumO = 0;
+		for (int i = 0; i < size; i++) {
+			for (int j = 0; j < size; j++) {
+				switch (board.getCell(i, j)) {
+				case TicTacToeBoard.X:
+					sumX += Math.pow(2, i*size+j);
+					break;
+				case TicTacToeBoard.O:
+					sumO += Math.pow(2, i*size+j);
+					break;
+				default:
+					break;
 				}
 			}
+		}
+		
+		// check rows
+		for (int row = 0; row < size; row++) {
+			if (rows[row] == sumX || rows[row] == sumO)
+				return true;
 		}
 		// check columns
 		for (int col = 0; col < size; col++) {
-			int first = board.getCell(0, col);
-			if (first != TicTacToeBoard.EMPTY) {
-				boolean same = true;
-				for (int row = 1; row < size; row++) {
-					if (board.getCell(row, col) != first) {
-						same = false;
-						break;
-					}
-				}
-				if (same) {
-					return true;
-				}
-			}
+			if (cols[col] == sumX || cols[col] == sumO)
+				return true;
 		}
 		// check main diagonal
-		int first = board.getCell(0, 0);
-		if (first != TicTacToeBoard.EMPTY) {
-			boolean same = true;
-			for (int i = 1; i < size; i++) {
-				if (board.getCell(i, i) != first) {
-					same = false;
-					break;
-				}
-			}
-			if (same) {
-				return true;
-			}
-		}
+		if (mainDiag == sumX) return true;
 		// check secondary diagonal
-		int last = size-1;
-		first = board.getCell(0, last);
-		if (first != TicTacToeBoard.EMPTY) {
-			boolean same = true;
-			for (int i = 1; i < size; i++) {
-				if (board.getCell(i, last-i) != first) {
-					same = false;
-					break;
-				}
-			}
-			if (same) {
-				return true;
-			}
-		}
+		if (secDiag == sumO) return true;
 		// check whether there are empty cells left
-		for (int i = 0; i < size; i++) {
-			for (int j = 0; j < size; j++) {
-				if (board.getCell(i, j) == TicTacToeBoard.EMPTY) {
-					return false;
-				}
-			}
-		}
-		return true;
+		if ((sumX|sumO) == fullBoard) return true;
+		return false;
 	}
 
 	/**
-	 * @see com.ai4u.core.Game#start(com.ai4u.core.Player)
+	 * @see com.ai4u.core.Game#start()
 	 */
-	public void start(Player player) {
+	public void start() {
 		disp.display(board);
-		TicTacToePlayer p = (TicTacToePlayer) player;
 		while (!isGameOver()) {
 			Move move = null;
-			switch (p) {
+			TicTacToePlayer nextPlayer = (TicTacToePlayer) board.getNextPlaying();			
+			switch (nextPlayer) {
 			case X:
 				move = xLogic.pickMove(board);
 				break;
@@ -131,8 +125,6 @@ public class TicTacToeGame implements Game {
 			}
 			board.makeMove(move);
 			disp.display(board);
-			p = p.equals(TicTacToePlayer.X) ?
-					TicTacToePlayer.O : TicTacToePlayer.X;
 		}
 		disp.gameOver(board);
 	}
