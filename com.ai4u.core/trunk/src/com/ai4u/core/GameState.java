@@ -10,10 +10,18 @@ import java.util.List;
 public interface GameState extends Cloneable {
 
 	/**
+	 * This action performs the move on the actual board.
 	 * @param move The move to make.
 	 * @return The new game state, after the move is made.
 	 */
 	public GameState makeMove(Move move);
+	
+	/**
+	 * This action performs the move on a copy of the actual board.
+	 * @param move The move to make.
+	 * @return The new game state, after the move is made.
+	 */
+	public GameState simulateMove(Move move);
 
 	/**
 	 * @param player The player whose turn it is.

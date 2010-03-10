@@ -32,10 +32,12 @@ public class MinimaxLogic implements Logic {
 		
 		// set the first move as the temporary best
 		Move bestMove = moves.get(0);
-		GameStateScore bestScore = evaluator.evaluate(gameState.makeMove(bestMove));
+		GameStateScore bestScore = evaluator.evaluate(
+				gameState.simulateMove(bestMove));
 		// compare to the rest of the moves
 		for (int i = 1; i < moves.size(); i++) {
-			GameStateScore currScore = evaluator.evaluate(gameState.makeMove(moves.get(i)));
+			GameStateScore currScore = evaluator.evaluate(
+					gameState.simulateMove(moves.get(i)));
 			if (currScore.compareTo(bestScore) > 0) {
 				bestMove = moves.get(i);
 				bestScore = currScore;

@@ -9,10 +9,8 @@ public interface Game {
 
 	/**
 	 * This method invokes the game start.
-	 * 
-	 * @param player The starting player.
 	 */
-	public void start(Player player);
+	public void start();
 	
 	/**
 	 * @return Whether the game has ended or not.
