@@ -11,19 +11,15 @@ public class TicTacToeMove implements Move {
 	private int i;
 	/** The column number. */
 	private int j;
-	/** The player who made the move. */
-	private TicTacToePlayer p;
 
 	/**
 	 * Constructor.
 	 * @param i The row number.
 	 * @param j The column number.
-	 * @param p The player who made the move.
 	 */
-	public TicTacToeMove(int i, int j, TicTacToePlayer p) {
+	public TicTacToeMove(int i, int j) {
 		this.i = i;
 		this.j = j;
-		this.p = p;
 	}
 	
 	/**
@@ -38,13 +34,6 @@ public class TicTacToeMove implements Move {
 	 */
 	public int getJ() {
 		return j;
-	}
-	
-	/**
-	 * @return The player who made the move.
-	 */
-	public TicTacToePlayer getPlayer() {
-		return p;
 	}
 	
 }

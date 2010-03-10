@@ -8,7 +8,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 
-import com.ai4u.core.Board;
+import com.ai4u.core.GameState;
 import com.ai4u.core.display.GameDisplayer;
 
 /**
@@ -65,8 +65,8 @@ public class TicTacToeGraphicDisplayer implements GameDisplayer {
 	/**
 	 * @see com.ai4u.core.display.GameDisplayer#display(com.ai4u.core.Board)
 	 */
-	public void display(Board board) {
-		TicTacToeBoard b = (TicTacToeBoard) board;
+	public void display(GameState state) {
+		TicTacToeBoard b = (TicTacToeBoard) state;
 		int n = b.getSize();
 		if (!wasDisplayed) {
 			frame.setSize(100*n + 10*(n-1), 100*n + 10*(n-1) + HEADER_SIZE);
@@ -112,11 +112,11 @@ public class TicTacToeGraphicDisplayer implements GameDisplayer {
 	/**
 	 * @see com.ai4u.core.display.GameDisplayer#gameOver(com.ai4u.core.Board)
 	 */
-	public void gameOver(Board board) {
+	public void gameOver(GameState state) {
 		Graphics g = frame.getGraphics();
 		g.setFont(new Font("Ariel", Font.BOLD, 52));
 		g.setColor(Color.RED);
-		int n = ((TicTacToeBoard)board).getSize();
+		int n = ((TicTacToeBoard)state).getSize();
 		int textX = (110*n - 280) / 2;
 		int textY = (110*n) / 2 + HEADER_SIZE;
 		g.drawBytes("Game Over".getBytes(), 0, 9, textX, textY);

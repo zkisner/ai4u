@@ -1,7 +1,10 @@
 package com.ai4u.games.tictactoe;
 
-import com.ai4u.core.*;
+import com.ai4u.core.Game;
+import com.ai4u.core.Move;
+import com.ai4u.core.Player;
 import com.ai4u.core.display.GameDisplayer;
+import com.ai4u.core.logic.Logic;
 
 /**
  * @author igalk
