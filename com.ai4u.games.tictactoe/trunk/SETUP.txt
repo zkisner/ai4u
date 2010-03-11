@@ -1,0 +1,2 @@
+CLASSPATH:
+- define a variable: JUNIT_HOME_DIR that points to a dir with a junit and src files.
