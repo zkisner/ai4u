@@ -106,7 +106,7 @@ public class TicTacToeGraphicDisplayer implements GameDisplayer {
 				g.drawImage(img, 110*j, 110*i + HEADER_SIZE, null);				
 			}
 		}
-		frame.setVisible(true);
+		frame.paint(g);
 	}
 
 	/**

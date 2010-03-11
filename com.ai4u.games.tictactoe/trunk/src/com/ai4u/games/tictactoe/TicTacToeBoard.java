@@ -27,6 +27,9 @@ public class TicTacToeBoard implements ITicTacToeBoard {
 		cells = new char[size][];
 		for (int i = 0; i < size; i++) {
 			cells[i] = new char[size];
+			for (int j = 0; j < size; j++) {
+				cells[i][j] = EMPTY;
+			}
 		}
 		nextPlayer = TicTacToePlayer.X;
 	}
