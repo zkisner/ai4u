@@ -77,10 +77,10 @@ public class TicTacToeGame implements Game {
 			for (int j = 0; j < size; j++) {
 				switch (board.getCell(i, j)) {
 				case TicTacToeBoard.X:
-					sumX += Math.pow(2, i*size+j);
+					sumX += (1 << (i*size+j));
 					break;
 				case TicTacToeBoard.O:
-					sumO += Math.pow(2, i*size+j);
+					sumO += (1 << (i*size+j));
 					break;
 				default:
 					break;
@@ -90,20 +90,22 @@ public class TicTacToeGame implements Game {
 		
 		// check rows
 		for (int row = 0; row < size; row++) {
-			if ((rows[row]^sumX) == rows[row] ||
-				(rows[row]^sumO) == rows[row])
+			if ((rows[row]&sumX) == rows[row] ||
+				(rows[row]&sumO) == rows[row])
 				return true;
 		}
 		// check columns
 		for (int col = 0; col < size; col++) {
-			if ((cols[col]^sumX) == cols[col] ||
-				(cols[col]^sumO) == cols[col])
+			if ((cols[col]&sumX) == cols[col] ||
+				(cols[col]&sumO) == cols[col])
 				return true;
 		}
 		// check main diagonal
-		if ((mainDiag^sumX) == mainDiag) return true;
+		if ((mainDiag&sumX) == mainDiag) return true;
+		if ((mainDiag&sumO) == mainDiag) return true;
 		// check secondary diagonal
-		if ((secDiag^sumO) == secDiag) return true;
+		if ((secDiag&sumX) == secDiag) return true;
+		if ((secDiag&sumO) == secDiag) return true;
 		// check whether there are empty cells left
 		if ((sumX|sumO) == fullBoard) return true;
 		return false;

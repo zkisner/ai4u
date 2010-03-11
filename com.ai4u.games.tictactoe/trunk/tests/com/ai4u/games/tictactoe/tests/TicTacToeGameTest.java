@@ -21,7 +21,7 @@ import com.ai4u.games.tictactoe.TicTacToeGame;
  */
 public class TicTacToeGameTest {
 
-	private ITicTacToeBoard board;
+	private TestBoard board;
 	private TicTacToeGame game;
 
 	@Before
@@ -29,29 +29,142 @@ public class TicTacToeGameTest {
 		board = new TestBoard(3);
 		game = new TicTacToeGame(board, null, null, null);
 	}
-	
+
 	/**
-	 * Test method for {@link com.ai4u.games.tictactoe.TicTacToeGame#isGameOver()}.
+	 * Test method for
+	 * {@link com.ai4u.games.tictactoe.TicTacToeGame#isGameOver()}.
 	 */
 	@Test
 	public void testIsGameOver() {
-		// check rows
-		for (int i = 0; i < board.getSize(); i++) {
-			checkRowForPlayer(i, ITicTacToeBoard.X, ITicTacToeBoard.O);
-			checkRowForPlayer(i, ITicTacToeBoard.O, ITicTacToeBoard.X);
-		}
-		fail("Not yet implemented");
+		fillCell(0, 0);
 	}
 
-	private void checkRowForPlayer(int row, char player, char otherPlayer) {
+	private void fillCell(int i, int j) {
+		if (j == board.size) {
+			checkBoard();
+		} else if (i == board.size) {
+			fillCell(0, j + 1);
+		} else {
+			board.cells[i][j] = ITicTacToeBoard.EMPTY;
+			fillCell(i + 1, j);
+			board.cells[i][j] = ITicTacToeBoard.X;
+			fillCell(i + 1, j);
+			board.cells[i][j] = ITicTacToeBoard.O;
+			fillCell(i + 1, j);
+		}
+	}
+
+	private void checkBoard() {
+		if (isFullBoard()) {
+			assertTrue("Board is full:\n" + printGame(), game.isGameOver());
+			return;
+		}
+
+		// check rows
+		for (int row = 0; row < board.size; row++) {
+			if (board.cells[row][0] == ITicTacToeBoard.EMPTY)
+				continue;
+
+			boolean shouldCheck = true;
+			for (int col = 1; col < board.size; col++) {
+				if (board.cells[row][col] != board.cells[row][0]) {
+					shouldCheck = false;
+					break;
+				}
+			}
+			if (shouldCheck) {
+				assertTrue("Row " + row + " is full", game.isGameOver());
+				return;
+			}
+		}
+		// check columns
+		for (int col = 0; col < board.size; col++) {
+			if (board.cells[0][col] == ITicTacToeBoard.EMPTY)
+				continue;
+
+			boolean shouldCheck = true;
+			for (int row = 1; row < board.size; row++) {
+				if (board.cells[row][col] != board.cells[0][col]) {
+					shouldCheck = false;
+					break;
+				}
+			}
+			if (shouldCheck) {
+				assertTrue("Column " + col + " is full", game.isGameOver());
+				return;
+			}
+		}
+		// check main diagonal
+		if (board.cells[0][0] != ITicTacToeBoard.EMPTY) {
+			boolean shouldCheck = true;
+			for (int i = 1; i < board.size; i++) {
+				if (board.cells[i][i] != board.cells[0][0]) {
+					shouldCheck = false;
+					break;
+				}
+			}
+			if (shouldCheck) {
+				assertTrue("Main diagonal is full", game.isGameOver());
+				return;
+			}
+		}
+		// check secondary diagonal
+		if (board.cells[0][board.size-1] != ITicTacToeBoard.EMPTY) {
+			boolean shouldCheck = true;
+			for (int i = 1; i < board.size; i++) {
+				if (board.cells[i][board.size - 1 - i] != board.cells[0][board.size-1]) {
+					shouldCheck = false;
+					break;
+				}
+			}
+			if (shouldCheck) {
+				assertTrue("Secondary diagonal is full:\n" + printGame(), game.isGameOver());
+				return;
+			}
+		}
+		assertFalse("Game is not over:\n" + printGame(), game.isGameOver());
+	}
+
+	private String printGame() {
+		StringBuilder sb = new StringBuilder();
 		
+		for (int i = 0; i < board.size; i++) {
+			for (int j = 0; j < board.size; j++) {
+				switch (board.cells[i][j]) {
+				case ITicTacToeBoard.EMPTY:
+					sb.append('_');
+					break;
+
+				case ITicTacToeBoard.X:
+					sb.append('X');
+					break;
+					
+				case ITicTacToeBoard.O:
+					sb.append('O');
+					break;
+				}
+				sb.append(' ');
+			}
+			sb.append('\n');
+		}
+		return sb.toString();
+	}
+
+	private boolean isFullBoard() {
+		for (int i = 0; i < board.size; i++) {
+			for (int j = 0; j < board.size; j++) {
+				if (board.cells[i][j] == ITicTacToeBoard.EMPTY)
+					return false;
+			}
+		}
+		return true;
 	}
 
 	private static class TestBoard implements ITicTacToeBoard {
-		
+
 		private int size;
 		public int[][] cells;
-		
+
 		public TestBoard(int size) {
 			this.size = size;
 			cells = new int[size][];
@@ -62,7 +175,7 @@ public class TicTacToeGameTest {
 				}
 			}
 		}
-		
+
 		public int getCell(int row, int col) {
 			return cells[row][col];
 		}
@@ -86,11 +199,11 @@ public class TicTacToeGameTest {
 		public GameState simulateMove(Move move) {
 			throw new RuntimeException("should not be used");
 		}
-		
+
 		@Override
 		public GameState clone() {
 			return null;
 		}
 	}
-	
+
 }
