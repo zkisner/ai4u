@@ -90,18 +90,20 @@ public class TicTacToeGame implements Game {
 		
 		// check rows
 		for (int row = 0; row < size; row++) {
-			if (rows[row] == sumX || rows[row] == sumO)
+			if ((rows[row]^sumX) == rows[row] ||
+				(rows[row]^sumO) == rows[row])
 				return true;
 		}
 		// check columns
 		for (int col = 0; col < size; col++) {
-			if (cols[col] == sumX || cols[col] == sumO)
+			if ((cols[col]^sumX) == cols[col] ||
+				(cols[col]^sumO) == cols[col])
 				return true;
 		}
 		// check main diagonal
-		if (mainDiag == sumX) return true;
+		if ((mainDiag^sumX) == mainDiag) return true;
 		// check secondary diagonal
-		if (secDiag == sumO) return true;
+		if ((secDiag^sumO) == secDiag) return true;
 		// check whether there are empty cells left
 		if ((sumX|sumO) == fullBoard) return true;
 		return false;
