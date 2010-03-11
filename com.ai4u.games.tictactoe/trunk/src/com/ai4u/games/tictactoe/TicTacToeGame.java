@@ -11,7 +11,7 @@ import com.ai4u.core.logic.Logic;
 public class TicTacToeGame implements Game {
 
 	/** The board the game is played on. */
-	private TicTacToeBoard board;
+	private ITicTacToeBoard board;
 	/** The means of display for the game. */
 	private GameDisplayer disp;
 	/** The logic for the player playing x. */
@@ -33,10 +33,10 @@ public class TicTacToeGame implements Game {
 	 * @param logic4x The logic of the player playing x.
 	 * @param logic4o The logic of the player playing o.
 	 */
-	public TicTacToeGame(int size, GameDisplayer displayer, Logic logic4x,
+	public TicTacToeGame(ITicTacToeBoard board, GameDisplayer displayer, Logic logic4x,
 			Logic logic4o) {
-		board = new TicTacToeBoard(size);
-		preCalcs(size);
+		this.board = board;
+		preCalcs(board.getSize());
 		disp = displayer;
 		xLogic = logic4x;
 		oLogic = logic4o;

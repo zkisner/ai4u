@@ -8,16 +8,7 @@ import com.ai4u.core.*;
 /**
  * @author igalk
  */
-public class TicTacToeBoard implements GameState {
-
-	/** An empty cell. */
-	public static final char EMPTY = ' ';
-	
-	/** A cell occupied by X. */
-	public static final char X = 'X';
-	
-	/** A cell occupied by O. */
-	public static final char O = 'O';
+public class TicTacToeBoard implements ITicTacToeBoard {
 
 	/** The size of the board. */
 	private int size;

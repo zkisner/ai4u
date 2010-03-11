@@ -13,7 +13,7 @@ public class TicTacToeMain {
 	 * @throws Exception If errors occur.
 	 */
 	public static void main(String[] args) throws Exception {
-		Game game = new TicTacToeGame(3,
+		Game game = new TicTacToeGame(new TicTacToeBoard(3),
 				new TicTacToeGraphicDisplayer(),
 				new RandomMoveLogic(TicTacToePlayer.X),
 				new RandomMoveLogic(TicTacToePlayer.O));
