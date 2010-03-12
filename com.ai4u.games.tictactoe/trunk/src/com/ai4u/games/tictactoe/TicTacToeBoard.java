@@ -57,7 +57,7 @@ public class TicTacToeBoard implements ITicTacToeBoard {
 		
 		cells[m.getI()][m.getJ()] = nextPlayer.equals(TicTacToePlayer.X) ? X : O;
 		nextPlayer = nextPlayer.equals(TicTacToePlayer.X) ?
-				TicTacToePlayer.X : TicTacToePlayer.O;
+				TicTacToePlayer.O : TicTacToePlayer.X;
 		
 		return this;
 	}

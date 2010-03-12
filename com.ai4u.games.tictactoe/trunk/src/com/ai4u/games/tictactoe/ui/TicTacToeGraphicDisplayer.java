@@ -1,4 +1,4 @@
-package com.ai4u.games.tictactoe;
+package com.ai4u.games.tictactoe.ui;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -10,6 +10,7 @@ import javax.swing.JFrame;
 
 import com.ai4u.core.GameState;
 import com.ai4u.core.display.GameDisplayer;
+import com.ai4u.games.tictactoe.TicTacToeBoard;
 
 /**
  * @author igalk
@@ -106,7 +107,7 @@ public class TicTacToeGraphicDisplayer implements GameDisplayer {
 				g.drawImage(img, 110*j, 110*i + HEADER_SIZE, null);				
 			}
 		}
-		frame.paint(g);
+		frame.setVisible(true);
 	}
 
 	/**

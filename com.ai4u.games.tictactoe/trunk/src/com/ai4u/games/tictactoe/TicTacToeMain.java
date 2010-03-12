@@ -2,6 +2,7 @@ package com.ai4u.games.tictactoe;
 
 import com.ai4u.core.Game;
 import com.ai4u.core.logic.computer.RandomMoveLogic;
+import com.ai4u.games.tictactoe.ui.TicTacToeGraphicDisplayer;
 
 /**
  * @author igalk
