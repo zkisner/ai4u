@@ -1,23 +1,18 @@
 package com.ai4u.games.tictactoe;
 
-import com.ai4u.core.Game;
-import com.ai4u.core.Move;
+import java.util.HashMap;
+import java.util.Map;
+
+import com.ai4u.core.Player;
 import com.ai4u.core.display.GameDisplayer;
+import com.ai4u.core.game.AbstractSimpleGame;
 import com.ai4u.core.logic.Logic;
 
 /**
  * @author igalk
  */
-public class TicTacToeGame implements Game {
+public class TicTacToeGame extends AbstractSimpleGame {
 
-	/** The board the game is played on. */
-	private ITicTacToeBoard board;
-	/** The means of display for the game. */
-	private GameDisplayer disp;
-	/** The logic for the player playing x. */
-	private Logic xLogic;
-	/** The logic for the player playing o. */
-	private Logic oLogic;
 	/** Pre Calculations. */
 	private long[] rows;
 	private long[] cols;
@@ -35,11 +30,15 @@ public class TicTacToeGame implements Game {
 	 */
 	public TicTacToeGame(ITicTacToeBoard board, GameDisplayer displayer, Logic logic4x,
 			Logic logic4o) {
-		this.board = board;
+		super(board, displayer, buildMap(logic4x, logic4o));
 		preCalcs(board.getSize());
-		disp = displayer;
-		xLogic = logic4x;
-		oLogic = logic4o;
+	}
+
+	private static Map<Player, Logic> buildMap(Logic logic4x, Logic logic4o) {
+		Map<Player, Logic> map = new HashMap<Player, Logic>();
+		map.put(TicTacToePlayer.X, logic4x);
+		map.put(TicTacToePlayer.O, logic4o);
+		return map;
 	}
 
 	private void preCalcs(int size) {
@@ -66,9 +65,11 @@ public class TicTacToeGame implements Game {
 	}
 
 	/**
-	 * @see com.ai4u.core.Game#isGameOver()
+	 * @see com.ai4u.core.game.Game#isGameOver()
 	 */
 	public boolean isGameOver() {
+		ITicTacToeBoard board = (ITicTacToeBoard)this.state;
+		
 		int size = board.getSize();
 		// sum all cells with powers of 2
 		long sumX = 0;
@@ -111,26 +112,6 @@ public class TicTacToeGame implements Game {
 		return false;
 	}
 
-	/**
-	 * @see com.ai4u.core.Game#start()
-	 */
-	public void start() {
-		disp.display(board);
-		while (!isGameOver()) {
-			Move move = null;
-			TicTacToePlayer nextPlayer = (TicTacToePlayer) board.getNextPlaying();			
-			switch (nextPlayer) {
-			case X:
-				move = xLogic.pickMove(board);
-				break;
-			case O:
-				move = oLogic.pickMove(board);
-				break;
-			}
-			board.makeMove(move);
-			disp.display(board);
-		}
-		disp.gameOver(board);
-	}
+	
 
 }
