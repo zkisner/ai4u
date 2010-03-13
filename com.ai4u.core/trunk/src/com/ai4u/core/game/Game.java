@@ -1,4 +1,4 @@
-package com.ai4u.core;
+package com.ai4u.core.game;
 
 /**
  * This is an interface for a turn based game.
