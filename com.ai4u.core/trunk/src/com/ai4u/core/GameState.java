@@ -34,6 +34,20 @@ public interface GameState extends Cloneable {
 	 */
 	public Player getNextPlaying();
 	
+	/**
+	 * @return True if the game has ended, false otherwise.
+	 */
+	public boolean isGameOver();
+	
+	/**
+	 * @return The winner if there is one. <code>null</code> if the game didn't
+	 *         end, or if there is a tie. 
+	 */
+	public Player getWinner();
+	
+	/**
+	 * @return Duplicates the game state.
+	 */
 	public GameState clone();
 	
 }

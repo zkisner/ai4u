@@ -18,6 +18,10 @@ import com.ai4u.core.logic.computer.evaluation.GameStateScore;
 public class MinimaxLogic implements Logic {
 
 	private GameStateEvaluator evaluator;
+	
+	public MinimaxLogic(GameStateEvaluator evaluator) {
+		this.evaluator = evaluator;
+	}
 
 	/**
 	 * @see com.ai4u.core.logic.Logic#pickMove(com.ai4u.core.GameState)
@@ -33,11 +37,13 @@ public class MinimaxLogic implements Logic {
 		// set the first move as the temporary best
 		Move bestMove = moves.get(0);
 		GameStateScore bestScore = evaluator.evaluate(
-				gameState.simulateMove(bestMove));
+				gameState.simulateMove(bestMove),
+				next);
 		// compare to the rest of the moves
 		for (int i = 1; i < moves.size(); i++) {
 			GameStateScore currScore = evaluator.evaluate(
-					gameState.simulateMove(moves.get(i)));
+					gameState.simulateMove(moves.get(i)),
+					next);
 			if (currScore.compareTo(bestScore) > 0) {
 				bestMove = moves.get(i);
 				bestScore = currScore;
