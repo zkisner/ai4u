@@ -14,14 +14,15 @@ import com.ai4u.core.logic.Logic;
 /**
  * @author igalk
  */
-public abstract class AbstractSimpleGame implements Game {
+public abstract class AbstractSimpleGame<T extends Move, S extends GameState<T,S,P>, D extends GameDisplayer<T, S, P>, P extends Player<T>>
+implements Game {
 
-	protected final GameState state;
-	private final GameDisplayer displayer;
-	private final Map<Player, Logic> player2Logic;
+	protected final S state;
+	private final D displayer;
+	private final Map<P, Logic<T,S,P>> player2Logic;
 
-	public AbstractSimpleGame(GameState state, GameDisplayer displayer,
-			Map<Player, Logic> player2Logic) {
+	public AbstractSimpleGame(S state, D displayer, 
+			Map<P, Logic<T,S,P>> player2Logic) {
 		this.state = state;
 		this.displayer = displayer;
 		this.player2Logic = player2Logic;
@@ -33,12 +34,12 @@ public abstract class AbstractSimpleGame implements Game {
 	public void start() {
 		displayer.display(state);
 		while (!isGameOver()) {
-			Player nextPlayer = state.getNextPlaying();
-			Logic logic = player2Logic.get(nextPlayer);
+			Player<T> nextPlayer = state.getNextPlaying();
+			Logic<T,S,P> logic = player2Logic.get(nextPlayer);
 			if (logic == null)
 				throw new RuntimeException("Missing Logic for player: " + nextPlayer);
 			
-			Move move = logic.pickMove(state);
+			T move = logic.pickMove(state);
 			state.makeMove(move);
 			displayer.display(state);
 		}

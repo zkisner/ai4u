@@ -5,7 +5,7 @@ package com.ai4u.core;
  * 
  * @author kreich
  */
-public interface Player {
+public interface Player<T extends Move> {
 
 	// nothing here yet
 	

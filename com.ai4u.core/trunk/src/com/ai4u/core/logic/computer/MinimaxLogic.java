@@ -15,40 +15,71 @@ import com.ai4u.core.logic.computer.evaluation.GameStateScore;
 /**
  * @author igalk
  */
-public class MinimaxLogic implements Logic {
+//public class MinimaxLogic<T extends Move, E extends GameStateEvaluator<T, GameState<T>, GameStateScore<T>, Player<T>>> implements Logic<T> {
+public class MinimaxLogic<T extends Move, S extends GameState<T,S,P>, C extends GameStateScore<T>, P extends Player<T>, E extends GameStateEvaluator<T, S, C, P>>
+implements Logic<T,S,P> {
 
-	private GameStateEvaluator evaluator;
+	private E evaluator;
+	private final int maxDepth;
 	
-	public MinimaxLogic(GameStateEvaluator evaluator) {
+	public MinimaxLogic(E evaluator, int maxDepth) {
 		this.evaluator = evaluator;
+		this.maxDepth = maxDepth;
 	}
 
 	/**
 	 * @see com.ai4u.core.logic.Logic#pickMove(com.ai4u.core.GameState)
 	 */
-	public Move pickMove(GameState gameState) {
-		Player next = gameState.getNextPlaying();
-		List<Move> moves = gameState.getMoves(next);
+	public T pickMove(S gameState) {
+		return innerPickMove(gameState, maxDepth);
+	}
+	
+	private T innerPickMove(S gameState, int depth) {
+		P next = gameState.getNextPlaying();
+		List<T> moves = gameState.getMoves(next);
 		
 		// check for moves to make
 		if (moves.isEmpty())
 			throw new IllegalArgumentException("State has no available moves.");
 		
 		// set the first move as the temporary best
-		Move bestMove = moves.get(0);
-		GameStateScore bestScore = evaluator.evaluate(
-				gameState.simulateMove(bestMove),
-				next);
+		T bestMove = moves.get(0);
+		GameStateScore<T> bestScore = evaluate(gameState, bestMove, next, depth);
 		// compare to the rest of the moves
 		for (int i = 1; i < moves.size(); i++) {
-			GameStateScore currScore = evaluator.evaluate(
-					gameState.simulateMove(moves.get(i)),
-					next);
-			if (currScore.compareTo(bestScore) > 0) {
-				bestMove = moves.get(i);
-				bestScore = currScore;
+			T currentMove = moves.get(i);
+			S simulatedMove = gameState.simulateMove(currentMove);
+			C currentScore = evaluator.evaluate(simulatedMove, next);
+			if (currentScore.compareTo(bestScore) > 0) {
+				bestMove = currentMove;
+				bestScore = currentScore;
 			}
 		}
 		return bestMove;
 	}
+	
+	private C evaluate(S state, T move, P nextPlayer, int maxDepth) {
+		int depth = maxDepth - 1;
+		S stateAfterMove = state.simulateMove(move);
+		if (depth == 0 || stateAfterMove.isGameOver()) {
+			return evaluator.evaluate(stateAfterMove, nextPlayer);
+		}
+
+		P next = stateAfterMove.getNextPlaying();
+		List<T> nextMoves = stateAfterMove.getMoves(next);
+		// check for moves to make
+		if (nextMoves.isEmpty())
+			throw new IllegalArgumentException("State has no available moves.");
+		
+		C bestScore = evaluate(stateAfterMove, nextMoves.get(0),
+				next, depth);
+		for (int i = 1; i < nextMoves.size(); i++) {
+			C currScore = evaluate(stateAfterMove,
+					nextMoves.get(0), next, depth);
+			bestScore = (currScore.compareTo(bestScore) > 0) ?
+					currScore : bestScore;
+		}
+		return bestScore;
+	}
+	
 }

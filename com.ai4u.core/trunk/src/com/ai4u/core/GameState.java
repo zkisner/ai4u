@@ -7,32 +7,33 @@ import java.util.List;
  * 
  * @author kreich
  */
-public interface GameState extends Cloneable {
+public interface GameState<T extends Move, S extends GameState<T,S,P>, P extends Player<T>>
+extends Cloneable {
 
 	/**
 	 * This action performs the move on the actual board.
 	 * @param move The move to make.
 	 * @return The new game state, after the move is made.
 	 */
-	public GameState makeMove(Move move);
+	public S makeMove(T move);
 	
 	/**
 	 * This action performs the move on a copy of the actual board.
 	 * @param move The move to make.
 	 * @return The new game state, after the move is made.
 	 */
-	public GameState simulateMove(Move move);
+	public S simulateMove(T move);
 
 	/**
 	 * @param player The player whose turn it is.
 	 * @return A List of the currently available moves.
 	 */
-	public List<Move> getMoves(Player player);
+	public List<T> getMoves(Player<T> player);
 	
 	/**
 	 * @return The player whose next turn it is.
 	 */
-	public Player getNextPlaying();
+	public P getNextPlaying();
 	
 	/**
 	 * @return True if the game has ended, false otherwise.
@@ -43,11 +44,11 @@ public interface GameState extends Cloneable {
 	 * @return The winner if there is one. <code>null</code> if the game didn't
 	 *         end, or if there is a tie. 
 	 */
-	public Player getWinner();
+	public P getWinner();
 	
 	/**
 	 * @return Duplicates the game state.
 	 */
-	public GameState clone();
+	public S clone();
 	
 }
