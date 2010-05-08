@@ -36,4 +36,17 @@ public class TicTacToeMove implements Move {
 		return j;
 	}
 	
+	@Override
+	public boolean equals(Object other) {
+		if (!(other instanceof TicTacToeMove)) return false;
+		
+		TicTacToeMove compared = (TicTacToeMove) other;
+		return (i == compared.i) && (j == compared.j);
+	}
+	
+	@Override
+	public String toString() {
+		return "(" + i + "," + j + ")";
+	}
+	
 }

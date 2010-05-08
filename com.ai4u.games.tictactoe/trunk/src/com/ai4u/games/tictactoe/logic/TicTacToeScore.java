@@ -4,11 +4,12 @@
 package com.ai4u.games.tictactoe.logic;
 
 import com.ai4u.core.logic.computer.evaluation.GameStateScore;
+import com.ai4u.games.tictactoe.TicTacToeMove;
 
 /**
  * @author igalk
  */
-public class TicTacToeScore implements GameStateScore {
+public class TicTacToeScore implements GameStateScore<TicTacToeMove> {
 
 	private int score;
 	
@@ -19,8 +20,13 @@ public class TicTacToeScore implements GameStateScore {
 	/**
 	 * @see java.lang.Comparable#compareTo(java.lang.Object)
 	 */
-	public int compareTo(GameStateScore score) {
+	public int compareTo(GameStateScore<TicTacToeMove> score) {
 		return this.score - ((TicTacToeScore)score).score;
+	}
+	
+	@Override
+	public String toString() {
+		return Integer.toString(score);
 	}
 
 }

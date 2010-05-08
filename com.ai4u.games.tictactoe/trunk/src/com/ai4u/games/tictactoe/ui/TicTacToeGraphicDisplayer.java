@@ -1,6 +1,8 @@
 package com.ai4u.games.tictactoe.ui;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -8,14 +10,16 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 
-import com.ai4u.core.GameState;
 import com.ai4u.core.display.GameDisplayer;
-import com.ai4u.games.tictactoe.TicTacToeBoard;
+import com.ai4u.games.tictactoe.ITicTacToeBoard;
+import com.ai4u.games.tictactoe.TicTacToeMove;
+import com.ai4u.games.tictactoe.TicTacToePlayer;
 
 /**
  * @author igalk
  */
-public class TicTacToeGraphicDisplayer implements GameDisplayer {
+public class TicTacToeGraphicDisplayer
+implements GameDisplayer<TicTacToeMove, ITicTacToeBoard, TicTacToePlayer> {
 
 	/** The size of the frame window. */
 	private static final int HEADER_SIZE = 30;
@@ -66,9 +70,8 @@ public class TicTacToeGraphicDisplayer implements GameDisplayer {
 	/**
 	 * @see com.ai4u.core.display.GameDisplayer#display(com.ai4u.core.Board)
 	 */
-	public void display(GameState state) {
-		TicTacToeBoard b = (TicTacToeBoard) state;
-		int n = b.getSize();
+	public void display(ITicTacToeBoard board) {
+		int n = board.getSize();
 		if (!wasDisplayed) {
 			frame.setSize(100*n + 10*(n-1), 100*n + 10*(n-1) + HEADER_SIZE);
 			frame.setVisible(true);
@@ -93,14 +96,14 @@ public class TicTacToeGraphicDisplayer implements GameDisplayer {
 				
 				// draw cells
 				BufferedImage img = null;
-				switch (b.getCell(i,j)) {
-				case TicTacToeBoard.EMPTY:
+				switch (board.getCell(i,j)) {
+				case ITicTacToeBoard.EMPTY:
 					img = BLANK_IMG;
 					break;
-				case TicTacToeBoard.X:
+				case ITicTacToeBoard.X:
 					img = X_IMG;
 					break;
-				case TicTacToeBoard.O:
+				case ITicTacToeBoard.O:
 					img = O_IMG;
 					break;
 				}
@@ -113,11 +116,11 @@ public class TicTacToeGraphicDisplayer implements GameDisplayer {
 	/**
 	 * @see com.ai4u.core.display.GameDisplayer#gameOver(com.ai4u.core.Board)
 	 */
-	public void gameOver(GameState state) {
+	public void gameOver(ITicTacToeBoard state) {
 		Graphics g = frame.getGraphics();
 		g.setFont(new Font("Ariel", Font.BOLD, 52));
 		g.setColor(Color.RED);
-		int n = ((TicTacToeBoard)state).getSize();
+		int n = state.getSize();
 		int textX = (110*n - 280) / 2;
 		int textY = (110*n) / 2 + HEADER_SIZE;
 		g.drawBytes("Game Over".getBytes(), 0, 9, textX, textY);

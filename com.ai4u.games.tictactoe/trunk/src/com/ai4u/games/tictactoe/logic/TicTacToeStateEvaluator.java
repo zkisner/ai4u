@@ -1,24 +1,25 @@
 package com.ai4u.games.tictactoe.logic;
 
-import com.ai4u.core.GameState;
-import com.ai4u.core.Player;
 import com.ai4u.core.logic.computer.evaluation.GameStateEvaluator;
-import com.ai4u.core.logic.computer.evaluation.GameStateScore;
+import com.ai4u.games.tictactoe.ITicTacToeBoard;
+import com.ai4u.games.tictactoe.TicTacToeMove;
+import com.ai4u.games.tictactoe.TicTacToePlayer;
 
-public class TicTacToeStateEvaluator implements GameStateEvaluator {
+public class TicTacToeStateEvaluator
+implements GameStateEvaluator<TicTacToeMove, ITicTacToeBoard, TicTacToeScore, TicTacToePlayer> {
 
-	public GameStateScore evaluate(GameState state, Player player) {
+	public TicTacToeScore evaluate(ITicTacToeBoard state, TicTacToePlayer player) {
 		return state.isGameOver() ?
 				getWinnerScore(state, player) :
 				new TicTacToeScore(0);
 	}
 
-	private GameStateScore getWinnerScore(GameState state, Player player) {
-		Player winner = state.getWinner();
-		if (winner == null)
+	private TicTacToeScore getWinnerScore(ITicTacToeBoard state, TicTacToePlayer player) {
+		TicTacToePlayer winner = state.getWinner();
+		if (winner == null) {
 			return new TicTacToeScore(0);
-		else
-			return new TicTacToeScore(player.equals(winner) ? 1 : -1);
+		}
+		return new TicTacToeScore(player.equals(winner) ? 1 : -1);
 	}
 
 }

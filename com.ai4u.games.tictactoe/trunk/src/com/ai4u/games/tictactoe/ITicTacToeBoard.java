@@ -8,7 +8,8 @@ import com.ai4u.core.GameState;
 /**
  * @author igalk
  */
-public interface ITicTacToeBoard extends GameState {
+public interface ITicTacToeBoard
+extends GameState<TicTacToeMove, ITicTacToeBoard, TicTacToePlayer> {
 
 	/** An empty cell. */
 	public static final char EMPTY = ' ';

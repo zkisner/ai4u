@@ -71,8 +71,8 @@ public class TicTacToeBoard implements ITicTacToeBoard {
 	/**
 	 * @see com.ai4u.core.Board#getMoves(com.ai4u.core.Player)
 	 */
-	public List<Move> getMoves(Player player) {
-		List<Move> moves = new ArrayList<Move>();
+	public List<TicTacToeMove> getMoves(Player<TicTacToeMove> player) {
+		List<TicTacToeMove> moves = new ArrayList<TicTacToeMove>();
 		for (int i = 0; i < size; i++) {
 			for (int j = 0; j < size; j++) {
 				if (cells[i][j] == EMPTY) {
@@ -86,22 +86,21 @@ public class TicTacToeBoard implements ITicTacToeBoard {
 	/**
 	 * @see com.ai4u.core.Board#makeMove(com.ai4u.core.Move)
 	 */
-	public TicTacToeBoard makeMove(Move move) {
-		TicTacToeMove m = (TicTacToeMove) move;
-		
-		cells[m.getI()][m.getJ()] = nextPlayer.equals(TicTacToePlayer.X) ? X : O;
+	public TicTacToeBoard makeMove(TicTacToeMove move) {
+		cells[move.getI()][move.getJ()] = nextPlayer.equals(TicTacToePlayer.X) ?
+				X : O;
 		nextPlayer = nextPlayer.equals(TicTacToePlayer.X) ?
 				TicTacToePlayer.O : TicTacToePlayer.X;
 		
 		return this;
 	}
 	
-	public GameState simulateMove(Move move) {
+	public TicTacToeBoard simulateMove(TicTacToeMove move) {
 		TicTacToeBoard copy = this.clone();
 		return copy.makeMove(move);
 	}
 
-	public Player getNextPlaying() {
+	public TicTacToePlayer getNextPlaying() {
 		return nextPlayer;
 	}
 	
@@ -112,10 +111,10 @@ public class TicTacToeBoard implements ITicTacToeBoard {
 		for (int i = 0; i < size; i++) {
 			for (int j = 0; j < size; j++) {
 				switch (cells[i][j]) {
-				case TicTacToeBoard.X:
+				case ITicTacToeBoard.X:
 					sumX += (1 << (i*size+j));
 					break;
-				case TicTacToeBoard.O:
+				case ITicTacToeBoard.O:
 					sumO += (1 << (i*size+j));
 					break;
 				default:
@@ -191,6 +190,20 @@ public class TicTacToeBoard implements ITicTacToeBoard {
 		clone.nextPlayer = this.nextPlayer;
 		
 		return clone;
+	}
+	
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		for (char[] row : cells) {
+			builder.append('[');
+			for (char c : row) {
+				builder.append(c).append(',');
+			}
+			int length = builder.length();
+			builder.replace(length-1, length, "]\n");
+		}
+		return builder.toString();
 	}
 
 }

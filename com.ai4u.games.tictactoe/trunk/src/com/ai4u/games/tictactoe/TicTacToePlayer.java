@@ -5,7 +5,7 @@ import com.ai4u.core.Player;
 /**
  * @author igalk
  */
-public enum TicTacToePlayer implements Player {
+public enum TicTacToePlayer implements Player<TicTacToeMove> {
 
 	/** The X player. */
 	X,
