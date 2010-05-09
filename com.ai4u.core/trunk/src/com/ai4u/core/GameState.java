@@ -5,9 +5,13 @@ import java.util.List;
 /**
  * This is an interface for the game board on which the game is played.
  * 
+ * @param <M> The type of moves.
+ * @param <S> The type of game states.
+ * @param <P> The type of players.
+ *  
  * @author kreich
  */
-public interface GameState<T extends Move, S extends GameState<T,S,P>, P extends Player<T>>
+public interface GameState<M extends Move, S extends GameState<M,S,P>, P extends Player<M>>
 extends Cloneable {
 
 	/**
@@ -15,20 +19,20 @@ extends Cloneable {
 	 * @param move The move to make.
 	 * @return The new game state, after the move is made.
 	 */
-	public S makeMove(T move);
+	public S makeMove(M move);
 	
 	/**
 	 * This action performs the move on a copy of the actual board.
 	 * @param move The move to make.
 	 * @return The new game state, after the move is made.
 	 */
-	public S simulateMove(T move);
+	public S simulateMove(M move);
 
 	/**
 	 * @param player The player whose turn it is.
 	 * @return A List of the currently available moves.
 	 */
-	public List<T> getMoves(Player<T> player);
+	public List<M> getMoves(Player<M> player);
 	
 	/**
 	 * @return The player whose next turn it is.
