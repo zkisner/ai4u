@@ -16,6 +16,10 @@ import com.ai4u.games.tictactoe.TicTacToeBoard;
  */
 public class TicTacToeGameTest extends TicTacToeBoard {
 
+	/**
+	 * Constructor.
+	 * initializes a board of 3x3.
+	 */
 	public TicTacToeGameTest() {
 		super(3);
 	}

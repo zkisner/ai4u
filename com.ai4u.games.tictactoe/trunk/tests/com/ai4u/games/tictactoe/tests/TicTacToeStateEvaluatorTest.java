@@ -3,17 +3,27 @@ package com.ai4u.games.tictactoe.tests;
 import org.junit.Assert;
 import org.junit.Test;
 
-import com.ai4u.games.tictactoe.TicTacToeBoard;
-import com.ai4u.games.tictactoe.TicTacToeMove;
-import com.ai4u.games.tictactoe.TicTacToePlayer;
+import com.ai4u.games.tictactoe.*;
 import com.ai4u.games.tictactoe.logic.TicTacToeScore;
 import com.ai4u.games.tictactoe.logic.TicTacToeStateEvaluator;
 
 
+/**
+ * Test for the {@link TicTacToeStateEvaluator}.
+ * 
+ * @author igalk
+ */
 public class TicTacToeStateEvaluatorTest {
 	
 	TicTacToeStateEvaluator evaluator = new TicTacToeStateEvaluator();
 	
+	/**
+	 * Tests that the evaluator recognizes a X win and checks the given score
+	 * for the board:
+	 * [x,o, ]
+	 * [x,o, ]
+	 * [x, , ]
+	 */
 	@Test
 	public void checkWhiteWin() {
 		TicTacToeBoard board = new TicTacToeBoard(3);

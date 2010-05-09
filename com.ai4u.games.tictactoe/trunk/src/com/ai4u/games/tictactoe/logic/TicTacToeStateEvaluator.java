@@ -1,10 +1,13 @@
 package com.ai4u.games.tictactoe.logic;
 
 import com.ai4u.core.logic.computer.evaluation.GameStateEvaluator;
-import com.ai4u.games.tictactoe.ITicTacToeBoard;
-import com.ai4u.games.tictactoe.TicTacToeMove;
-import com.ai4u.games.tictactoe.TicTacToePlayer;
+import com.ai4u.games.tictactoe.*;
 
+/**
+ * An evaluator for {@link ITicTacToeBoard}s.
+ * 
+ * @author igalk
+ */
 public class TicTacToeStateEvaluator
 implements GameStateEvaluator<TicTacToeMove, ITicTacToeBoard, TicTacToeScore, TicTacToePlayer> {
 

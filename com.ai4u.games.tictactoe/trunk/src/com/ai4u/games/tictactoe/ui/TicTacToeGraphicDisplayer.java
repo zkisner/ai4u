@@ -66,9 +66,9 @@ implements GameDisplayer<TicTacToeMove, ITicTacToeBoard, TicTacToePlayer> {
 	
 	
 	/* --- GameDisplayer implementation --- */
-	
+
 	/**
-	 * @see com.ai4u.core.display.GameDisplayer#display(com.ai4u.core.Board)
+	 * @see com.ai4u.core.display.GameDisplayer#display(com.ai4u.core.GameState)
 	 */
 	public void display(ITicTacToeBoard board) {
 		int n = board.getSize();
@@ -114,7 +114,7 @@ implements GameDisplayer<TicTacToeMove, ITicTacToeBoard, TicTacToePlayer> {
 	}
 
 	/**
-	 * @see com.ai4u.core.display.GameDisplayer#gameOver(com.ai4u.core.Board)
+	 * @see com.ai4u.core.display.GameDisplayer#gameOver(com.ai4u.core.GameState)
 	 */
 	public void gameOver(ITicTacToeBoard state) {
 		Graphics g = frame.getGraphics();

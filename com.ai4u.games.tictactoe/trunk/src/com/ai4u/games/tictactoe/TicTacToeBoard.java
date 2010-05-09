@@ -3,7 +3,7 @@ package com.ai4u.games.tictactoe;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.ai4u.core.*;
+import com.ai4u.core.Player;
 
 /**
  * @author igalk
@@ -67,9 +67,9 @@ public class TicTacToeBoard implements ITicTacToeBoard {
 		}
 		fullBoard = (1 << size*size) - 1;
 	}
-	
+
 	/**
-	 * @see com.ai4u.core.Board#getMoves(com.ai4u.core.Player)
+	 * @see com.ai4u.core.GameState#getMoves(com.ai4u.core.Player)
 	 */
 	public List<TicTacToeMove> getMoves(Player<TicTacToeMove> player) {
 		List<TicTacToeMove> moves = new ArrayList<TicTacToeMove>();
@@ -84,7 +84,7 @@ public class TicTacToeBoard implements ITicTacToeBoard {
 	}
 
 	/**
-	 * @see com.ai4u.core.Board#makeMove(com.ai4u.core.Move)
+	 * @see com.ai4u.core.GameState#makeMove(com.ai4u.core.Move)
 	 */
 	public TicTacToeBoard makeMove(TicTacToeMove move) {
 		cells[move.getI()][move.getJ()] = nextPlayer.equals(TicTacToePlayer.X) ?

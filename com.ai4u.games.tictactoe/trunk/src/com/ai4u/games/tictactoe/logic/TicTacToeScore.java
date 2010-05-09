@@ -13,6 +13,10 @@ public class TicTacToeScore implements GameStateScore<TicTacToeMove> {
 
 	private int score;
 	
+	/**
+	 * Constructor.
+	 * @param score The numeric score value.
+	 */
 	public TicTacToeScore(int score) {
 		this.score = score;
 	}
