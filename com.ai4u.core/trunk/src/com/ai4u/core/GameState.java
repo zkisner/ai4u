@@ -32,7 +32,7 @@ extends Cloneable {
 	 * @param player The player whose turn it is.
 	 * @return A List of the currently available moves.
 	 */
-	public List<M> getMoves(Player<M> player);
+	public List<M> getMoves(P player);
 	
 	/**
 	 * @return The player whose next turn it is.

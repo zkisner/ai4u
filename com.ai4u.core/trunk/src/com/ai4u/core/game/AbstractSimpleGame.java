@@ -5,9 +5,7 @@ package com.ai4u.core.game;
 
 import java.util.Map;
 
-import com.ai4u.core.GameState;
-import com.ai4u.core.Move;
-import com.ai4u.core.Player;
+import com.ai4u.core.*;
 import com.ai4u.core.display.GameDisplayer;
 import com.ai4u.core.logic.Logic;
 
@@ -55,7 +53,8 @@ implements Game {
 			Player<M> nextPlayer = state.getNextPlaying();
 			Logic<M, S, P> logic = player2Logic.get(nextPlayer);
 			if (logic == null)
-				throw new RuntimeException("Missing Logic for player: " + nextPlayer);
+				throw new RuntimeException("Missing Logic for player: "
+						+ nextPlayer);
 			
 			M move = logic.pickMove(state);
 			state.makeMove(move);

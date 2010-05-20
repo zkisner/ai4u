@@ -16,7 +16,7 @@ import com.ai4u.util.RandomUtils;
 public class RandomMoveLogic<M extends Move, S extends GameState<M,S,P>, P extends Player<M>> implements Logic<M,S,P> {
 	
 	/** The player whose moves this logic attends. */
-	private Player<M> role;
+	private P role;
 	
 	/** A random generator for this logic. */
 	private RandomUtils rand = new RandomUtils();
@@ -25,7 +25,7 @@ public class RandomMoveLogic<M extends Move, S extends GameState<M,S,P>, P exten
 	 * Constructor.
 	 * @param role The player whose moves this logic attends.
 	 */
-	public RandomMoveLogic(Player<M> role) {
+	public RandomMoveLogic(P role) {
 		this.role = role;
 	}
 	
