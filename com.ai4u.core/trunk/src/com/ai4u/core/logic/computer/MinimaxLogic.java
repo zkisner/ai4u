@@ -59,6 +59,9 @@ implements Logic<M,S,P> {
 		if (moves.isEmpty())
 			throw new IllegalArgumentException("State has no available moves.");
 		
+		if (moves.size() == 1)
+			return moves.get(0);
+		
 		// set the first move as the temporary best
 		M bestMove = moves.get(0);
 		GameStateScore<M> bestScore = evaluate(gameState, bestMove, next,
