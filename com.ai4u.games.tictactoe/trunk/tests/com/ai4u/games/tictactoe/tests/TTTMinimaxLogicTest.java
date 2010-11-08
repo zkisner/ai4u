@@ -1,8 +1,9 @@
-package com.ai4u.core.logic.computer;
+package com.ai4u.games.tictactoe.tests;
 import org.junit.Assert;
 import org.junit.Test;
 
 import com.ai4u.core.logic.Logic;
+import com.ai4u.core.logic.computer.MinimaxLogic;
 import com.ai4u.games.tictactoe.*;
 import com.ai4u.games.tictactoe.logic.TicTacToeScore;
 import com.ai4u.games.tictactoe.logic.TicTacToeStateEvaluator;
@@ -12,7 +13,7 @@ import com.ai4u.games.tictactoe.logic.TicTacToeStateEvaluator;
  * 
  * @author igalk
  */
-public class MinimaxLogicTest {
+public class TTTMinimaxLogicTest {
 
 	private Logic<TicTacToeMove, ITicTacToeBoard, TicTacToePlayer> logic =
 		new MinimaxLogic<TicTacToeMove, ITicTacToeBoard, TicTacToeScore, TicTacToePlayer, TicTacToeStateEvaluator>(

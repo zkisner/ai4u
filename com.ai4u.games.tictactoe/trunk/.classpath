@@ -5,6 +5,6 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/com.ai4u.core"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/com.ai4u.util"/>
-	<classpathentry kind="var" path="JUNIT_HOME_DIR/junit-4.5.jar" sourcepath="/JUNIT_HOME_DIR/junit-4.5-src.zip"/>
+	<classpathentry kind="lib" path="D:/proj/lib/junit.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
