@@ -39,4 +39,18 @@ public class TrieTest {
 		}
 	}
 	
+	@Test
+	@Repeat(100)
+	public void testSuffixTree() {
+		String text = rand.nextString(5/*rand.nextInt(10000)*/, RandomUtils.abc);
+		
+		Trie suffixTree = Trie.generateSuffixTree(text);
+		for (int i = 0; i < 500; i++) {
+			int beginIndex = rand.nextInt(text.length());
+			int endIndex = rand.nextInt(beginIndex, text.length());
+			String substr = text.substring(beginIndex, endIndex);
+			assertTrue(suffixTree.findPrefix(substr));
+		}
+	}
+	
 }

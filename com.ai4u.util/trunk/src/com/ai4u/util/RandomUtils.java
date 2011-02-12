@@ -18,6 +18,21 @@ public class RandomUtils extends Random {
 		'w', 'x', 'y', 'z' };
 
 	/**
+	 * Generates a random int between <code>from</code> (inclusive) and
+	 * <code>to</code> (exclusive).
+	 * 
+	 * @param from The lowest bound.
+	 * @param to The highest bound.
+	 * @return A random integer between the bounds.
+	 */
+	public int nextInt(int from, int to) {
+		if (to < from) {
+			throw new IllegalArgumentException("to must not be lower than from");
+		}
+		return from + nextInt(to - from + 1);
+	}
+
+	/**
 	 * Picks a random element from the given {@link Collection}.
 	 * 
 	 * @param <T> The type of the elements in the {@link Collection}.

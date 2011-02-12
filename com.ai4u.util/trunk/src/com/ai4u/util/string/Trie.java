@@ -8,6 +8,20 @@ package com.ai4u.util.string;
  */
 public class Trie {
 
+	/**
+	 * Generates a suffix tree for the given text.
+	 * 
+	 * @param text The text to analyze.
+	 * @return The Trie that represents the suffix tree.
+	 */
+	public static Trie generateSuffixTree(String text) {
+		Trie trie = new Trie();
+		for (int i = 0; i < text.length(); i++) {
+			trie.add(text.substring(i));
+		}
+		return trie;
+	}
+	
 	private TrieVertex root = new TrieVertex();
 	
 	/**
@@ -17,8 +31,20 @@ public class Trie {
 		add(str, root);
 	}
 	
+	/**
+	 * @param str The string to search for.
+	 * @return Whether this exact string is found in the tree.
+	 */
 	public boolean exists(String str) {
 		return exists(str, root);
+	}
+	
+	/**
+	 * @param str The string to search for.
+	 * @return Whether this string is found in the tree as a prefix.
+	 */
+	public boolean findPrefix(String str) {
+		return findPrefix(str, root);
 	}
 	
 	private void add(String str, TrieVertex vertex) {
@@ -74,6 +100,22 @@ public class Trie {
 		}
 		if (str.startsWith(child.value)) {
 			return exists(str.substring(child.value.length()), child);
+		}
+		return false;
+	}
+	
+	private boolean findPrefix(String str, TrieVertex vertex) {
+		if (str.isEmpty()) {
+			return true;
+		}
+		TrieVertex child = vertex.getChild(str.charAt(0));
+		if (child == null) {
+			return false;
+		}
+		if (str.startsWith(child.value)) {
+			return findPrefix(str.substring(child.value.length()), child);
+		} else if (child.value.startsWith(str)) {
+			return true;
 		}
 		return false;
 	}
