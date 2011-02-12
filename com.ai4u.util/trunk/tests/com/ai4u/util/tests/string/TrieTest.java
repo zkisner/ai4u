@@ -28,7 +28,7 @@ public class TrieTest {
 		int size = rand.nextInt(1000);
 		String[] strs = new String[size];
 		for (int i = 0; i < size; i++) {
-			strs[i] = rand.nextString(rand.nextInt(50), RandomUtils.abc);
+			strs[i] = rand.nextString(rand.nextInt(50), RandomUtils.A_Za_z0_9);
 			trie.add(strs[i]);
 		}
 		
@@ -42,7 +42,7 @@ public class TrieTest {
 	@Test
 	@Repeat(100)
 	public void testSuffixTree() {
-		String text = rand.nextString(5/*rand.nextInt(10000)*/, RandomUtils.abc);
+		String text = rand.nextString(rand.nextInt(10000), RandomUtils.A_Za_z0_9);
 		
 		Trie suffixTree = Trie.generateSuffixTree(text);
 		for (int i = 0; i < 500; i++) {

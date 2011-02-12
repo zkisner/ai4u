@@ -13,10 +13,20 @@ import java.util.*;
 public class RandomUtils extends Random {
 
 	private static final long serialVersionUID = 1L;
-	public static final char[] abc = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h',
+	public static final char[] a_z = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h',
 		'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v',
 		'w', 'x', 'y', 'z' };
-
+	
+	public static final char[] A_Z = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H',
+		'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V',
+		'W', 'X', 'Y', 'Z' };
+	
+	public static final char[] DIGITS = { '0', '1', '2', '3', '4', '5', '6',
+		'7', '8', '9' };
+	
+	public static final char[] A_Za_z0_9 = ArrayUtils.concat(A_Z, a_z, DIGITS);
+	
+	
 	/**
 	 * Generates a random int between <code>from</code> (inclusive) and
 	 * <code>to</code> (exclusive).

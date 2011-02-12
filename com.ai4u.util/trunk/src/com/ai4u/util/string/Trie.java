@@ -3,6 +3,9 @@
  */
 package com.ai4u.util.string;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * @author kreich
  */
@@ -124,7 +127,8 @@ public class Trie {
 
 		public String value;
 		public boolean end;
-		public TrieVertex[] children = new TrieVertex[26];
+		private Map<Character, TrieVertex> children =
+			new HashMap<Character, TrieVertex>();
 		
 		public TrieVertex() {
 			this("");
@@ -140,11 +144,11 @@ public class Trie {
 		}
 		
 		public TrieVertex getChild(char c) {
-			return children[c - 'a'];
+			return children.get(c);
 		}
 		
 		public void setChild(char c, TrieVertex vertex) {
-			children[c - 'a'] = vertex;
+			children.put(c, vertex);
 		}
 		
 		@Override

@@ -68,7 +68,7 @@ public class ArrayHeapTest {
 	@Test
 	@Repeat(500)
 	public void testHeapDelete() {
-		int size = rand.nextInt(100) + 1;
+		int size = rand.nextInt(1, 101);
 		Integer[] arr = new Integer[size];
 		for (int i = 0; i < size; i++) {
 			arr[i] = rand.nextInt(10000);
