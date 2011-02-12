@@ -1,3 +1,6 @@
+/**
+ * Created on 11/02/11
+ */
 package com.ai4u.util;
 
 import java.lang.annotation.Annotation;
@@ -6,6 +9,9 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author kreich
+ */
 public class AnnotationUtils {
 
 	public static List<Method> getAnnotatedMethods(Class<?> clazz,

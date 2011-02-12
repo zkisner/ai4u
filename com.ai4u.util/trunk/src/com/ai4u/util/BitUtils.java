@@ -1,8 +1,9 @@
+/**
+ * Created on 13/06/09
+ */
 package com.ai4u.util;
 
 /**
- * 
- * 
  * @author kreich
  */
 public class BitUtils {

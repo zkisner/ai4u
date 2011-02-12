@@ -1,5 +1,11 @@
+/**
+ * Created on 12/02/11
+ */
 package com.ai4u.util;
 
+/**
+ * @author kreich
+ */
 public class MathUtil {
 
 	/**

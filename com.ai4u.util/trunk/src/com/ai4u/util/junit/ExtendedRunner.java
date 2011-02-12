@@ -1,3 +1,6 @@
+/**
+ * Created on 11/02/11
+ */
 package com.ai4u.util.junit;
 
 import java.lang.annotation.Annotation;
@@ -20,6 +23,9 @@ import org.junit.runners.model.*;
 
 import com.ai4u.util.AnnotationUtils;
 
+/**
+ * @author kreich
+ */
 public class ExtendedRunner extends Runner {
 
 	private final Class<?> testClass;

@@ -1,3 +1,6 @@
+/**
+ * Created on 08/11/10
+ */
 package com.ai4u.util.graph;
 
 import java.util.HashMap;
@@ -6,7 +9,7 @@ import java.util.HashSet;
 /**
  * @param <T> The type of values in the graph.
  *
- * @author igalk
+ * @author kreich
  */
 public class Graph<T> {
 
