@@ -1,3 +1,6 @@
+/**
+ * Created on 13/06/09
+ */
 package com.ai4u.util;
 
 import java.util.*;
@@ -10,9 +13,13 @@ import java.util.*;
 public class RandomUtils extends Random {
 
 	private static final long serialVersionUID = 1L;
+	public static final char[] abc = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h',
+		'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v',
+		'w', 'x', 'y', 'z' };
 
 	/**
 	 * Picks a random element from the given {@link Collection}.
+	 * 
 	 * @param <T> The type of the elements in the {@link Collection}.
 	 * @param collection The {@link Collection} to pick a random element from.
 	 * @return A random element from the {@link Collection}.
@@ -28,6 +35,34 @@ public class RandomUtils extends Random {
 	}
 	
 	/**
+	 * Picks a random element from the given array.
+	 * 
+	 * @param <T> The type of the elements in the array.
+	 * @param array The array to pick a random element from.
+	 * @return A random element from the array.
+	 */
+	public <T> T pickRandom(T[] array) {
+		if (array.length == 0) return null;
+		
+		return array[nextInt(array.length)];
+	}
+	
+	/**
+	 * Picks a random char from the given array.
+	 * 
+	 * @param array The array to pick a random char from.
+	 * @return A random char from the array.
+	 */
+	public char pickRandom(char[] array) {
+		if (array.length == 0) throw new IllegalArgumentException(
+				"Can't pick from an empty array");
+		
+		return array[nextInt(array.length)];
+	}
+	
+	/**
+	 * Picks a random value from the Enum's values.
+	 * 
 	 * @param <E> The type of the Enum.
 	 * @param e The enum's class.
 	 * @return A random instance of the Enum.
@@ -39,6 +74,33 @@ public class RandomUtils extends Random {
 			return values[nextInt(values.length)];
 		} catch (Exception ex) {
 			throw new RuntimeException(ex);
+		}
+	}
+
+	/**
+	 * Constructs a random string from the given charset.
+	 * @param length The length of the string to construct.
+	 * @param charset The characters to build the string from.
+	 * @return A random string from the given charset.
+	 */
+	public String nextString(int length, char[] charset) {
+		StringBuilder builder = new StringBuilder();
+		for (int i = 0; i < length; i++) {
+			builder.append(pickRandom(charset));
+		}
+		return builder.toString();
+	}
+
+	/**
+	 * Shuffles the elements in the given array.
+	 * @param array The array to shuffle.
+	 */
+	public <T> void shuffle(T[] array) {
+		for (int i = array.length - 1; i > 0; --i) {
+			int elem = nextInt(i + 1);
+			T temp = array[elem];
+			array[elem] = array[i];
+			array[i] = temp;
 		}
 	}
 }
