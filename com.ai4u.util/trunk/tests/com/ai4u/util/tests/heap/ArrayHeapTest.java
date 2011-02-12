@@ -29,11 +29,11 @@ public class ArrayHeapTest {
 	@Repeat(500)
 	public void testHeapCreate() {
 		int size = rand.nextInt(100);
-		TestClass[] arr = new TestClass[size];
+		Integer[] arr = new Integer[size];
 		for (int i = 0; i < size; i++) {
-			arr[i] = new TestClass(rand.nextInt(10000));
+			arr[i] = rand.nextInt(10000);
 		}
-		Heap<TestClass> heap = new ArrayHeap<ArrayHeapTest.TestClass>(arr);
+		Heap<Integer> heap = new ArrayHeap<Integer>(arr);
 		
 		Arrays.sort(arr);
 		for (int i = arr.length - 1; i >= 0; --i) {
@@ -45,17 +45,17 @@ public class ArrayHeapTest {
 	@Repeat(500)
 	public void testHeapInsert() {
 		int size1 = rand.nextInt(100);
-		TestClass[] arr = new TestClass[size1];
+		Integer[] arr = new Integer[size1];
 		for (int i = 0; i < size1; i++) {
-			arr[i] = new TestClass(rand.nextInt(10000));
+			arr[i] = rand.nextInt(10000);
 		}
-		Heap<TestClass> heap = new ArrayHeap<ArrayHeapTest.TestClass>(arr);
+		Heap<Integer> heap = new ArrayHeap<Integer>(arr);
 		
 		int size2 = rand.nextInt(100);
-		TestClass[] arr2 = new TestClass[size1 + size2];
+		Integer[] arr2 = new Integer[size1 + size2];
 		System.arraycopy(arr, 0, arr2, 0, size1);
 		for (int i = size1; i < size1 + size2; i++) {
-			arr2[i] = new TestClass(rand.nextInt(10000));
+			arr2[i] = rand.nextInt(10000);
 			heap.insert(arr2[i]);
 		}
 		
@@ -69,44 +69,19 @@ public class ArrayHeapTest {
 	@Repeat(500)
 	public void testHeapDelete() {
 		int size = rand.nextInt(100) + 1;
-		TestClass[] arr = new TestClass[size];
+		Integer[] arr = new Integer[size];
 		for (int i = 0; i < size; i++) {
-			arr[i] = new TestClass(rand.nextInt(10000));
+			arr[i] = rand.nextInt(10000);
 		}
-		Heap<TestClass> heap = new ArrayHeap<ArrayHeapTest.TestClass>(arr);
+		Heap<Integer> heap = new ArrayHeap<Integer>(arr);
 		
 		for (int i = 0; i < 500; i++) {			
 			Arrays.sort(arr);
 			assertEquals(arr[size - 1], heap.deleteMax());
 			
-			arr[size - 1] = new TestClass(rand.nextInt(10000));
+			arr[size - 1] = rand.nextInt(10000);
 			heap.insert(arr[size - 1]);
 		}
-	}
-	
-	public class TestClass implements Comparable<TestClass> {
-
-		private int priority;
-		
-		public TestClass(int priority) {
-			this.priority = priority;
-		}
-		
-		@Override
-		public int compareTo(TestClass o) {
-			return priority - o.priority;
-		}
-		
-		@Override
-		public boolean equals(Object obj) {
-			return priority == ((TestClass)obj).priority;
-		}
-		
-		@Override
-		public String toString() {
-			return Integer.toString(priority);
-		}
-		
 	}
 	
 }
