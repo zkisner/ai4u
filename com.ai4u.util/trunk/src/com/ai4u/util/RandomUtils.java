@@ -39,7 +39,7 @@ public class RandomUtils extends Random {
 		if (to < from) {
 			throw new IllegalArgumentException("to must not be lower than from");
 		}
-		return from + nextInt(to - from + 1);
+		return from + nextInt(to - from);
 	}
 
 	/**

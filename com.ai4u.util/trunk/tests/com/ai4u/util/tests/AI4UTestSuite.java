@@ -17,7 +17,7 @@ import com.ai4u.util.tests.string.TrieTest;
 @SuiteClasses({
 	ArrayHeapTest.class,
 	TrieTest.class,
-	//SortUtilsTest.class
+	SortUtilsTest.class
 })
 public class AI4UTestSuite {
 
