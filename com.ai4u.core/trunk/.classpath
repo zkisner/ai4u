@@ -4,7 +4,7 @@
 	<classpathentry kind="src" path="tests"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/com.ai4u.util"/>
-	<classpathentry kind="lib" path="D:/proj/lib/easymock-3.0/easymock-3.0.jar"/>
-	<classpathentry kind="lib" path="D:/proj/lib/junit.jar"/>
+	<classpathentry kind="lib" path="../lib/easymock-3.0/easymock-3.0.jar"/>
+	<classpathentry kind="lib" path="../lib/junit-4.9b2.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
