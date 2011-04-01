@@ -7,6 +7,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
+import com.ai4u.util.tests.disjointSet.ArrayDisjointSetTest;
 import com.ai4u.util.tests.heap.ArrayHeapTest;
 import com.ai4u.util.tests.string.TrieTest;
 
@@ -15,6 +16,7 @@ import com.ai4u.util.tests.string.TrieTest;
  */
 @RunWith(Suite.class)
 @SuiteClasses({
+	ArrayDisjointSetTest.class,
 	ArrayHeapTest.class,
 	TrieTest.class,
 	SortUtilsTest.class
