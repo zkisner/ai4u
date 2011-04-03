@@ -24,10 +24,11 @@ public class ExtendedRunner extends BlockJUnit4ClassRunner {
 	 */
 	@Override
 	protected Description describeChild(FrameworkMethod method) {
-		if (method.getAnnotation(Repeat.class) != null) {
+		if (method.getAnnotation(Repeat.class) != null &&
+				method.getAnnotation(Ignore.class) == null) {
 			return describeRepeatTest(method);
 		}
-		return describeChild(method);
+		return super.describeChild(method);
 	}
 
 	private Description describeRepeatTest(FrameworkMethod method) {
