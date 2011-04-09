@@ -111,3 +111,6 @@ export PATH=$PATH:~/bin
 
 # SVN settings
 export SVN_EDITOR=vim
+
+# Python settings
+export PYTHONSTARTUP=~/.py_rc.py
