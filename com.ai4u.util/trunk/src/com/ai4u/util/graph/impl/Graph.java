@@ -1,7 +1,7 @@
 /**
  * Created on 08/11/10
  */
-package com.ai4u.util.graph;
+package com.ai4u.util.graph.impl;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -37,8 +37,8 @@ public class Graph<T> {
 	}
 	
 	/**
-	 * @param from
-	 * @param to
+	 * @param from The source vertex to connect
+	 * @param to The destination vertex to connect.
 	 */
 	public void connect(Vertex<T> from, Vertex<T> to) {
 		edges.put(from, new Edge<T>(from, to));

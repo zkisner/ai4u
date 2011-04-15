@@ -1,7 +1,7 @@
 /**
  * Created on 08/11/10
  */
-package com.ai4u.util.graph;
+package com.ai4u.util.graph.impl;
 
 /**
  * @param <T> the type of the value in the vertex.

@@ -1,14 +1,16 @@
 /**
  * Created on 08/11/10
  */
-package com.ai4u.util.graph;
+package com.ai4u.util.graph.impl;
+
+import com.ai4u.util.graph.IEdge;
 
 /**
  * @param <T> The type of values in the graph
  * 
  * @author kreich
  */
-public class Edge<T> {
+public class Edge<T> implements IEdge<T> {
 
 	/** The origin of the edge. */
 	private final Vertex<T> from;
@@ -25,16 +27,18 @@ public class Edge<T> {
 		this.to = to;
 	}
 	
-	/**
-	 * @return The The origin of the edge.
+	/* (non-Javadoc)
+	 * @see com.ai4u.util.graph.IEdge#getFrom()
 	 */
+	@Override
 	public Vertex<T> getFrom() {
 		return from;
 	}
 	
-	/**
-	 * @return The destination of the edge.
+	/* (non-Javadoc)
+	 * @see com.ai4u.util.graph.IEdge#getTo()
 	 */
+	@Override
 	public Vertex<T> getTo() {
 		return to;
 	}

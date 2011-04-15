@@ -6,9 +6,11 @@ package com.ai4u.util.heap;
 import com.ai4u.util.MathUtil;
 
 /**
+ * @param <T> The type of elements in the heap.
+ *  
  * @author kreich
  */
-public class ArrayHeap<T extends Comparable<? super T>> implements Heap<T> {
+public class ArrayHeap<T extends Comparable<? super T>> implements IHeap<T> {
 
 	private static final int MIN_SIZE = 16;
 	

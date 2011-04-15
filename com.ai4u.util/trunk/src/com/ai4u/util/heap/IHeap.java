@@ -9,9 +9,11 @@ package com.ai4u.util.heap;
  * efficient access to prioritized objects, holding the object with the highest
  * priority always at the top of the heap. 
  * 
+ * @param <T> The type of elements in the heap.
+ *  
  * @author kreich
  */
-public interface Heap<T extends Comparable<?>> {
+public interface IHeap<T extends Comparable<?>> {
 
 	/**
 	 * Inserts the given object into the heap.

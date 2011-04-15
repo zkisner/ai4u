@@ -12,7 +12,7 @@ import org.junit.runner.RunWith;
 
 import com.ai4u.util.RandomUtils;
 import com.ai4u.util.heap.ArrayHeap;
-import com.ai4u.util.heap.Heap;
+import com.ai4u.util.heap.IHeap;
 import com.ai4u.util.junit.ExtendedRunner;
 import com.ai4u.util.junit.Repeat;
 
@@ -33,7 +33,7 @@ public class ArrayHeapTest {
 		for (int i = 0; i < size; i++) {
 			arr[i] = rand.nextInt(10000);
 		}
-		Heap<Integer> heap = new ArrayHeap<Integer>(arr);
+		IHeap<Integer> heap = new ArrayHeap<Integer>(arr);
 		
 		Arrays.sort(arr);
 		for (int i = arr.length - 1; i >= 0; --i) {
@@ -49,7 +49,7 @@ public class ArrayHeapTest {
 		for (int i = 0; i < size1; i++) {
 			arr[i] = rand.nextInt(10000);
 		}
-		Heap<Integer> heap = new ArrayHeap<Integer>(arr);
+		IHeap<Integer> heap = new ArrayHeap<Integer>(arr);
 		
 		int size2 = rand.nextInt(100);
 		Integer[] arr2 = new Integer[size1 + size2];
@@ -73,7 +73,7 @@ public class ArrayHeapTest {
 		for (int i = 0; i < size; i++) {
 			arr[i] = rand.nextInt(10000);
 		}
-		Heap<Integer> heap = new ArrayHeap<Integer>(arr);
+		IHeap<Integer> heap = new ArrayHeap<Integer>(arr);
 		
 		for (int i = 0; i < 500; i++) {			
 			Arrays.sort(arr);
