@@ -35,17 +35,17 @@ public class ArrayDisjointSet implements DisjointSet {
 	 */
 	@Override
 	public int find(int item) {
-		int curr = item;
-		while (set[curr] != curr) {
-			int next = set[curr];
-			if (next != set[next]) {
-				set[curr] = set[next];
-				curr = next;
-				continue;
-			}
-			return next;
+		int root = item;
+		// find the root
+		while (set[root] != root) {
+			root = set[root];
 		}
-		return curr;
+		// now shorten the paths
+		int curr = item;
+		while (set[curr] != root) {
+			set[curr] = root;
+		}
+		return root;
 	}
 
 	/**
