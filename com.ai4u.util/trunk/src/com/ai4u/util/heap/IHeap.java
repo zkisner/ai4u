@@ -15,6 +15,14 @@ package com.ai4u.util.heap;
  */
 public interface IHeap<T extends Comparable<?>> {
 
+	/** This enum defines the mode of heap search. */
+	public static enum HeapMode {
+		/** This is the mode for a maximum heap. */
+		MAX,
+		/** This is the mode for a minimum heap. */
+		MIN
+	}
+	
 	/**
 	 * Inserts the given object into the heap.
 	 * 
@@ -30,14 +38,14 @@ public interface IHeap<T extends Comparable<?>> {
 	 * @return The object at the top of the heap (the one with the highest
 	 *         priority from those in the heap).
 	 */
-	public T max();
+	public T top();
 	
 	/**
-	 * Removes the object with the highest priority from the heap.
+	 * Removes the object at the top of the heap.
 	 * 
 	 * @return The removed object. 
 	 */
-	public T deleteMax();
+	public T deleteTop();
 	
 	/**
 	 * @return Whether the heap is empty.

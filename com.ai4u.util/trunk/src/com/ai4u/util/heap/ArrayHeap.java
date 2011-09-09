@@ -7,47 +7,51 @@ import com.ai4u.util.MathUtil;
 
 /**
  * @param <T> The type of elements in the heap.
- *  
+ * 
  * @author kreich
  */
 public class ArrayHeap<T extends Comparable<? super T>> implements IHeap<T> {
 
 	private static final int MIN_SIZE = 16;
-	
+
+	private final HeapMode mode;
 	/** The internal array holding the items in the heap. */
 	private Object[] items;
 	/** A counter holding the current size of the heap. */
 	private int size;
-	
+
+
 	/**
-	 * Constructor.
-	 * Initializes the heap with the given objects.
+	 * Constructor. Initializes the heap with the given objects.
 	 * 
+	 * @param mode The mode of the heap.
 	 * @param objs The objects to be put initially in the heap.
 	 */
-	public ArrayHeap(T ... objs) {
-		items = new Object[((objs.length * 2) < MIN_SIZE) ?
-				MIN_SIZE : (objs.length * 2)];
+	public ArrayHeap(HeapMode mode, T... objs) {
+		this.mode = mode;
+		items = new Object[((objs.length * 2) < MIN_SIZE) ? MIN_SIZE
+				: (objs.length * 2)];
 		System.arraycopy(objs, 0, items, 0, objs.length);
 		size = objs.length;
-		
+
 		int heightOfInner = (int) Math.floor(MathUtil.log(2, size));
-		int innerIndex = ((int)Math.pow(2, heightOfInner)) - 1;
+		int innerIndex = ((int) Math.pow(2, heightOfInner)) - 1;
 		for (int i = innerIndex - 1; i >= 0; --i) {
 			siftDown(i);
 		}
 	}
-	
+
 	@Override
 	public void insert(T obj) {
+		// if we're left with no space, increase the heap's space
 		if (items.length == size) {
 			resize(items.length * 2);
 		}
-		
+
 		items[size] = obj;
 		int parent = getParentIndex(size);
 		++size;
-		
+
 		while (parent != 0) {
 			siftDown(parent);
 			parent = getParentIndex(parent);
@@ -57,28 +61,28 @@ public class ArrayHeap<T extends Comparable<? super T>> implements IHeap<T> {
 
 	@Override
 	@SuppressWarnings("unchecked")
-	public T max() {
+	public T top() {
 		return isEmpty() ? null : (T) items[0];
 	}
 
 	@Override
-	public T deleteMax() {
-		T max = max();
+	public T deleteTop() {
+		T max = top();
 		if (max == null) {
 			return null;
 		}
-		
+
 		// put the last item on top and sift down
 		--size;
 		items[0] = items[size];
 		items[size] = null;
 		siftDown(0);
-		
+
 		// check whether the array should be cut
-		if (size*4 < items.length) {
+		if (size * 4 < items.length) {
 			resize(items.length / 2);
 		}
-		
+
 		return max;
 	}
 
@@ -91,34 +95,34 @@ public class ArrayHeap<T extends Comparable<? super T>> implements IHeap<T> {
 		int newSize = Math.max(size, MIN_SIZE);
 		Object[] newItems = new Object[newSize];
 		System.arraycopy(items, 0, newItems, 0, Math.min(items.length, newSize));
-		
+
 		items = newItems;
 	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private void siftDown(int index) {
-		int leftChildIndex = 2*index + 1;
-		int rightChildIndex = 2*index + 2;
-		
+		int leftChildIndex = 2 * index + 1;
+		int rightChildIndex = 2 * index + 2;
+
 		Object self = items[index];
-		Object leftChild = (leftChildIndex >= items.length) ?
-				null : items[leftChildIndex];
-		Object rightChild = (rightChildIndex >= items.length) ?
-				null : items[rightChildIndex];
+		Object leftChild = (leftChildIndex >= items.length) ? null
+				: items[leftChildIndex];
+		Object rightChild = (rightChildIndex >= items.length) ? null
+				: items[rightChildIndex];
 		if (rightChild == null) {
 			if (leftChild == null) {
 				// This is a leaf
 				return;
 			}
-			if (((Comparable)leftChild).compareTo(self) > 0) {
+			if (((Comparable) leftChild).compareTo(self) > 0) {
 				swap(leftChildIndex, index);
 				siftDown(leftChildIndex);
 			}
 		} else {
 			// both children are present
-			if (((Comparable)leftChild).compareTo(self) > 0 ||
-					((Comparable)rightChild).compareTo(self) > 0) {
-				if (((Comparable)leftChild).compareTo(rightChild) > 0) {
+			if (((Comparable) leftChild).compareTo(self) > 0
+					|| ((Comparable) rightChild).compareTo(self) > 0) {
+				if (((Comparable) leftChild).compareTo(rightChild) > 0) {
 					swap(leftChildIndex, index);
 					siftDown(leftChildIndex);
 				} else {
