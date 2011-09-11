@@ -4,6 +4,7 @@
 package com.ai4u.util.graph.impl;
 
 import com.ai4u.util.graph.IEdge;
+import com.ai4u.util.graph.IVertex;
 
 /**
  * @param <T> The type of values in the graph
@@ -27,19 +28,19 @@ public class Edge<T> implements IEdge<T> {
 		this.to = to;
 	}
 	
-	/* (non-Javadoc)
+	/**
 	 * @see com.ai4u.util.graph.IEdge#getFrom()
 	 */
 	@Override
-	public Vertex<T> getFrom() {
+	public IVertex<T> getFrom() {
 		return from;
 	}
 	
-	/* (non-Javadoc)
+	/**
 	 * @see com.ai4u.util.graph.IEdge#getTo()
 	 */
 	@Override
-	public Vertex<T> getTo() {
+	public IVertex<T> getTo() {
 		return to;
 	}
 	

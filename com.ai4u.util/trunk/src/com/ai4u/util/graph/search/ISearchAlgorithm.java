@@ -3,13 +3,9 @@
  */
 package com.ai4u.util.graph.search;
 
-import java.util.List;
-
-import com.ai4u.util.Acceptor;
 import com.ai4u.util.graph.IEdge;
 import com.ai4u.util.graph.IVertex;
-import com.ai4u.util.graph.impl.Edge;
-import com.ai4u.util.graph.impl.Vertex;
+import com.ai4u.util.tree.INode;
 
 /**
  * @param <T> The type of the elements in the vertices of the graph.
@@ -19,14 +15,11 @@ import com.ai4u.util.graph.impl.Vertex;
 public interface ISearchAlgorithm<T> {
 
 	/**
-	 * Searches for a {@link IVertex} that matches the @{Acceptor}, from the
-	 * starting point.
+	 * Searches the graph till all the graph is scanned.
 	 * 
 	 * @param startPoint The @{IVertex} to start from.
-	 * @param foundCondition The condition for the end of the search.
 	 * @return The path in {@link IEdge}s from the starting point to the end.
 	 */
-	public List<Edge<T>> find(Vertex<T> startPoint,
-			Acceptor<Vertex<T>> foundCondition);
+	public INode<T> find(IVertex<T> startPoint);
 
 }
