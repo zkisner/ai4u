@@ -12,7 +12,7 @@ set backspace=indent,eol,start
 set autowrite
 set autoindent " always set autoindenting on
 set shell=bash
-set directory=/tmp/nadir/vim
+set directory=/var/nadir/vim
 filetype plugin indent on
 
 " Section: Visual Settings {{{2
@@ -56,7 +56,7 @@ cmap <S-Insert> <C-R>*
 vnoremap p <ESC>:let current_reg = @"<CR>gvdi<C-R>=current_reg<CR><ESC>
 set pastetoggle=<F8>
 
-" cursor resoter commands
+" cursor restore commands
 
 set viminfo='100,\"100,:20,%,n~/.viminfo
 
