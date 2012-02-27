@@ -1,13 +1,75 @@
 <html>
+  <head>
+    <title>
+      Hangman's Helper
+    </title>
+    <script>
+      function Request(service, opt_argv) {
+        if (!opt_argv) opt_argv = Array();
+
+        var callback = null;
+        var len = opt_argv.length;
+        if (len > 0 && typeof opt_argv[len-1] == 'function') {
+          callback = opt_argv[len-1];
+          opt_argv.length--;
+        }
+        var async = (callback != null);
+
+        var query = '/' + encodeURIComponent(service);
+        if (opt_argv.length > 0) {
+          var key = 'arg0';
+          var val = JSON.stringify(opt_argv[0]);
+          query += '?' + key + '=' + encodeURIComponent(val);
+        }
+        for (var i = 1; i < opt_argv.length; i++) {
+          var key = 'arg' + i;
+          var val = JSON.stringify(opt_argv[i]);
+          query += '&' + key + '=' + encodeURIComponent(val);
+        }
+
+        var req = new XMLHttpRequest();
+        req.open('GET', query, async);
+
+        if (async) {
+          req.onreadystatechange = function() {
+            if (req.readyState == 4 && req.status == 200) {
+              var response = null;
+              try {
+                JSON.parse(req.responseText);
+              } catch (e) {
+                response = req.responseText;
+              }
+              callback(response);
+            }
+          }
+        }
+
+        req.send(null);
+      }
+
+      function installFunction(obj, name) {
+        obj[name] = function() {
+          Request(name, arguments);
+        }
+      }
+
+      var server = {};
+      installFunction(server, 'words');
+
+      function search(template, letters) {
+        server.words(template, letters);
+      }
+    </script>
+  </head>
   <body>
-    <form>
+    <form onSubmit="search(searchForm.template.value, searchForm.letters.value);" id="searchForm">
       <table>
         <tr>
           <td>
             Template:
           </td>
           <td>
-            <input type="text"/></br>
+            <input name="template" type="text"/></br>
           </td>
         </tr>
         <tr>
@@ -15,7 +77,12 @@
             Bad Letters:
           </td>
           <td>
-            <input type="text"/>
+            <input name="letters" type="text"/>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <button type="button" onClick="search(searchForm.template.value, searchForm.letters.value);">Search</button>
           </td>
         </tr>
       </table>
