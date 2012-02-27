@@ -35,7 +35,7 @@
             if (req.readyState == 4 && req.status == 200) {
               var response = null;
               try {
-                JSON.parse(req.responseText);
+                response = JSON.parse(req.responseText);
               } catch (e) {
                 response = req.responseText;
               }
@@ -56,9 +56,14 @@
       var server = {};
       installFunction(server, 'words');
 
-      function search(template, letters) {
-        server.words(template, letters);
+      function showResult(resultJson) {
+        alert(resultJson.value);
       }
+
+      function search(template, letters) {
+        server.words(template, letters, showResult);
+      }
+
     </script>
   </head>
   <body>

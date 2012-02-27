@@ -8,7 +8,5 @@ class Word(db.Model):
 
 class WordsRequestHandler(webapp2.RequestHandler):
   def get(self):
-    pass
+    self.response.out.write(json.dumps({'value':1}))
 
-  def post(self):
-    pass
