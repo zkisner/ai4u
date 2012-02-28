@@ -19,14 +19,17 @@ class Template:
   def words(self):
     used = set(self.template) - set('?')
     left = ''.join(set(string.ascii_lowercase) - self.bad_letters - used)
+    left_no_vowels = ''.join(set(left) - set('aeiou'))
+    last_vowel = max([self.template.rfind(l) for l in 'aeiou'])
     exploded = []
-    for l in self.template:
+    for i,l in enumerate(self.template):
       if l == '?':
-        exploded.append(left)
+        if i > last_vowel:
+          exploded.append(left_no_vowels)
+        else:
+          exploded.append(left)
       else:
         exploded.append(l)
-
-    logging.debug('%s'%exploded)
 
     indices = [0] * len(exploded)
     while indices[0] < len(exploded[0]):
@@ -62,6 +65,12 @@ class WordsRequestHandler(webapp2.RequestHandler):
       if l not in (string.ascii_lowercase + '?'):
         self.response.out.write(json.dumps({'error':'illegal template'}))
         return
+    if len(template) < 4:
+      self.response.out.write(json.dumps({'error':'template is too short'}))
+      return
+    if len(template) > 8:
+      self.response.out.write(json.dumps({'error':'template is too long'}))
+      return
 
     for l in letters:
       if l not in string.ascii_lowercase:
