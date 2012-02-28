@@ -57,19 +57,36 @@
       var server = {};
       installFunction(server, 'words');
 
+      function updateProgress(progress) {
+        var progressElem = document.getElementById('progress');
+        progressElem.textContent = "Progress: " + progress[0] + "/" + progress[1];
+      }
+
+      function addRow(rowContent) {
+        var table = document.getElementById('resultsTable');
+        var row = document.createElement('tr');
+        var column = document.createElement('td');
+        column.appendChild(rowContent);
+        row.appendChild(column);
+        table.appendChild(row);
+      }
+
       function showResult(resultJson) {
         if (resultJson.error != undefined) {
           alert(resultJson.error);
         } else {
+          updateProgress(resultJson.progress);
           for (var i in resultJson.results) {
             var result = resultJson.results[i];
 
-            var table = document.getElementById('resultsTable');
-            var row = document.createElement('tr');
-            var column = document.createElement('td');
-            column.textContent = result;
-            row.appendChild(column);
-            table.appendChild(row);
+            var span = document.createElement('span');
+            span.textContent = result;
+            addRow(span);
+          }
+          if (resultJson.done) {
+            alert("Done");
+          } else {
+            server.words(resultJson.template, resultJson.letters, resultJson.progress[0]+1, showResult);
           }
         }
       }
@@ -106,6 +123,7 @@
         </tr>
       </table>
     </form>
+    <div id="progress"/>
     <table id="resultsTable"/>
   </body>
 </html>

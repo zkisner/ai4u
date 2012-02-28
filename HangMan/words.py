@@ -14,53 +14,62 @@ class Word(db.Model):
 
 class Template:
   def __init__(self, template, bad_letters):
-    self.template = template
-    self.bad_letters = bad_letters
-
-  def words(self):
-    used = set(self.template) - set('?')
-    left = ''.join(set(string.ascii_lowercase) - self.bad_letters - used)
+    self.orig = template
+    used = set(template) - set('?')
+    left = ''.join(set(string.ascii_lowercase) - bad_letters - used)
     left_no_vowels = ''.join(set(left) - set('aeiou'))
-    last_vowel = max([self.template.rfind(l) for l in 'aeiou'])
-    exploded = []
-    for i,l in enumerate(self.template):
+    last_vowel = max([template.rfind(l) for l in 'aeiou'])
+    self.exploded = []
+    for i,l in enumerate(template):
       if l == '?':
         if last_vowel >= 0 and i > last_vowel:
-          exploded.append(left_no_vowels)
+          self.exploded.append(left_no_vowels)
         else:
-          exploded.append(left)
+          self.exploded.append(left)
       else:
-        exploded.append(l)
+        self.exploded.append(l)
 
-    indices = [0] * len(exploded)
-    while indices[0] < len(exploded[0]):
-      yield self.makeWord(exploded, indices)
-      indices = self.nextIndices(exploded, indices)
+    self.length = 1
+    for l in self.exploded:
+      self.length *= len(l)
+    self.indices = [0]*len(self.exploded)
 
-  def makeWord(self, exploded, indices):
+  def words(self):
+    while self.indices[0] < len(self.exploded[0]):
+      yield self.nextWord()
+      self.nextIndices()
+
+  def nextWord(self):
     word = ''
-    for i in range(len(exploded)):
-      word += exploded[i][indices[i]]
+    for i in range(len(self.exploded)):
+      word += self.exploded[i][self.indices[i]]
 
     return word
 
-  def nextIndices(self, exploded, indices):
-    new_indices = [i for i in indices]
-    new_indices[-1] += 1
+  def nextIndices(self):
+    self.indices[-1] += 1
 
-    index = len(new_indices) - 1
-    while index > 0 and new_indices[index] == len(exploded[index]):
-      new_indices[index] = 0
-      new_indices[index-1] += 1
+    index = len(self.indices) - 1
+    while index > 0 and self.indices[index] == len(self.exploded[index]):
+      self.indices[index] = 0
+      self.indices[index-1] += 1
       index -= 1
 
-    return new_indices
+  def skip(self, num):
+    i = 0
+    while i < num:
+      self.nextIndices()
+      i += 1
 
 
 class WordsRequestHandler(webapp2.RequestHandler):
   def get(self):
     template = self.request.get('arg0')[1:-1]
     letters = self.request.get('arg1')[1:-1]
+    if self.request.get('arg2'):
+      progress = int(self.request.get('arg2'))
+    else:
+      progress = None
     
     logging.debug("Handling new request: " + template + "," + letters)
 
@@ -82,12 +91,23 @@ class WordsRequestHandler(webapp2.RequestHandler):
     letters = set(letters)
     template = Template(template,letters)
 
-    results = self.doSearch(template, letters)
-    self.response.out.write(json.dumps({'results':results}))
+    if progress is None:
+      self.response.out.write(json.dumps({'done': False, 'results':[], 'progress':[0,template.length], 'template':template.orig, 'letters':''.join(letters)}))
+      #self.wordsIter = self.search(template, letters)
+    else:
+      template.skip(progress)
+      try:
+        #results = self.wordsIter.next()
+        results = self.search(template ,letters)
+      except StopIteration:
+        results = {'done': True, 'progress':[template.length,template.length]}
+      self.response.out.write(json.dumps(results))
 
-  def doSearch(self, template, letters):
+  def search(self, template, letters):
     results = []
-    for nextWord in template.words():
+    resultObject = {'done':False, 'results':results, 'progress':[0,template.length], 'template':template.orig, 'letters':''.join(letters)}
+
+    for i, nextWord in enumerate(template.words()):
       query = Word.all().filter("word =", nextWord)
       word = query.get()
 
@@ -101,8 +121,14 @@ class WordsRequestHandler(webapp2.RequestHandler):
       if word.exists:
         results.append(word.word)
         logging.debug("Found word: " + word.word)
+
+      #if i % 10 == 9:
+      resultObject['progress'][0] = i
+      yield resultObject
     
-    return results
+    resultObject['done'] = True
+    resultObject['progress'][0] = template.length
+    yield resultObject
 
   def wordInMorfix(self, word):
     while True:
