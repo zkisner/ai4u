@@ -26,6 +26,7 @@
           var val = JSON.stringify(opt_argv[i]);
           query += '&' + key + '=' + encodeURIComponent(val);
         }
+        query += '&ts=' + new Date().getTime();
 
         var req = new XMLHttpRequest();
         req.open('GET', query, async);

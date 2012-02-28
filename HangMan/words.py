@@ -25,7 +25,7 @@ class Template:
     exploded = []
     for i,l in enumerate(self.template):
       if l == '?':
-        if i > last_vowel:
+        if last_vowel >= 0 and i > last_vowel:
           exploded.append(left_no_vowels)
         else:
           exploded.append(left)
@@ -62,6 +62,8 @@ class WordsRequestHandler(webapp2.RequestHandler):
     template = self.request.get('arg0')[1:-1]
     letters = self.request.get('arg1')[1:-1]
     
+    logging.debug("Handling new request: " + template + "," + letters)
+
     for l in template:
       if l not in (string.ascii_lowercase + '?'):
         self.response.out.write(json.dumps({'error':'illegal template'}))
@@ -88,14 +90,17 @@ class WordsRequestHandler(webapp2.RequestHandler):
     for nextWord in template.words():
       query = Word.all().filter("word =", nextWord)
       word = query.get()
+
       if not word:
         word = Word()
         word.word = nextWord
         word.exists = self.wordInMorfix(nextWord)
         word.put()
 
+      logging.debug("Searching word: %s [%s]" % (word.word, word.exists))
       if word.exists:
         results.append(word.word)
+        logging.debug("Found word: " + word.word)
     
     return results
 
