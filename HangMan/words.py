@@ -71,7 +71,7 @@ class WordsRequestHandler(webapp2.RequestHandler):
     else:
       progress = None
     
-    logging.debug("Handling new request: " + template + "," + letters)
+    logging.info("Handling new request: %s,%s,%s" % (template, letters, progress))
 
     for l in template:
       if l not in (string.ascii_lowercase + '?'):
@@ -91,23 +91,20 @@ class WordsRequestHandler(webapp2.RequestHandler):
     letters = set(letters)
     template = Template(template,letters)
 
-    if progress is None:
-      self.response.out.write(json.dumps({'done': False, 'results':[], 'progress':[0,template.length], 'template':template.orig, 'letters':''.join(letters)}))
-      #self.wordsIter = self.search(template, letters)
-    else:
+    resultObject = {'done': False, 'results':[], 'progress':[0,template.length], 'template':template.orig, 'letters':''.join(letters)}
+    if progress is not None:
       template.skip(progress)
-      try:
-        #results = self.wordsIter.next()
-        results = self.search(template ,letters)
-      except StopIteration:
-        results = {'done': True, 'progress':[template.length,template.length]}
-      self.response.out.write(json.dumps(results))
+      resultObject['progress'][0] = progress
+      self.search(template, resultObject)
+    
+    self.response.out.write(json.dumps(resultObject))
 
-  def search(self, template, letters):
-    results = []
-    resultObject = {'done':False, 'results':results, 'progress':[0,template.length], 'template':template.orig, 'letters':''.join(letters)}
+  def search(self, template, resultObject):
+    try:
+      nextWord = template.words().next()
 
-    for i, nextWord in enumerate(template.words()):
+      logging.info("Searching word: %s" % nextWord)
+      
       query = Word.all().filter("word =", nextWord)
       word = query.get()
 
@@ -117,18 +114,16 @@ class WordsRequestHandler(webapp2.RequestHandler):
         word.exists = self.wordInMorfix(nextWord)
         word.put()
 
-      logging.debug("Searching word: %s [%s]" % (word.word, word.exists))
-      if word.exists:
-        results.append(word.word)
-        logging.debug("Found word: " + word.word)
+      resultObject['progress'][0] += 1
 
-      #if i % 10 == 9:
-      resultObject['progress'][0] = i
-      yield resultObject
-    
-    resultObject['done'] = True
-    resultObject['progress'][0] = template.length
-    yield resultObject
+      logging.info("Searching word: %s [%s]" % (word.word, word.exists))
+      if word.exists:
+        resultObject['results'].append(word.word)
+        logging.info("Found word: " + word.word)
+
+    except StopIteration:
+      resultObject['done'] = True
+      resultObject['progress'][0] = template.length
 
   def wordInMorfix(self, word):
     while True:

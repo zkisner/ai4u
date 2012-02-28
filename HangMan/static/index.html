@@ -86,7 +86,7 @@
           if (resultJson.done) {
             alert("Done");
           } else {
-            server.words(resultJson.template, resultJson.letters, resultJson.progress[0]+1, showResult);
+            server.words(resultJson.template, resultJson.letters, resultJson.progress[0], showResult);
           }
         }
       }
@@ -123,7 +123,8 @@
         </tr>
       </table>
     </form>
-    <div id="progress"/>
+    <div id="progress">
+    </div>
     <table id="resultsTable"/>
   </body>
 </html>
