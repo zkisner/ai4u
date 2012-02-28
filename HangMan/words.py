@@ -1,6 +1,7 @@
 import webapp2
 import json
 import string
+import httplib
 from google.appengine.ext import db
 
 import logging
@@ -8,7 +9,7 @@ import logging
 logging.getLogger().setLevel(logging.DEBUG)
 
 class Word(db.Model):
-  word = db.StringProperty(required=True)
+  word = db.StringProperty()
   exists = db.BooleanProperty()
 
 class Template:
@@ -85,6 +86,28 @@ class WordsRequestHandler(webapp2.RequestHandler):
   def doSearch(self, template, letters):
     results = []
     for nextWord in template.words():
-      results.append(nextWord)
+      query = Word.all().filter("word =", nextWord)
+      word = query.get()
+      if not word:
+        word = Word()
+        word.word = nextWord
+        word.exists = self.wordInMorfix(nextWord)
+        word.put()
+
+      if word.exists:
+        results.append(word.word)
     
     return results
+
+  def wordInMorfix(self, word):
+    while True:
+      try:
+        conn = httplib.HTTPConnection('morfix.nana10.co.il')
+        conn.request('GET', '/default.aspx?q=' + word + '&source=milon')
+        data = conn.getresponse().read()
+        conn.close()
+
+        return (data.find('<span class="word">') > 0)
+      except:
+        pass
+
