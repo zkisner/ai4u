@@ -3,6 +3,21 @@
     <title>
       Hangman's Helper
     </title>
+    <script src="http://cdn.jquerytools.org/1.2.6/full/jquery.tools.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/static/css/tabs.css" />
+    <style>
+      .panes div {
+        display:none;   
+        padding:15px 10px;
+        border:1px solid #999;
+        border-bottom:0px;
+        border-top:0;
+        height:100px;
+        font-size:14px;
+        background-color:#fff;
+      }
+    </style>
+
     <script>
       function Request(service, opt_argv) {
         if (!opt_argv) opt_argv = Array();
@@ -98,36 +113,49 @@
     </script>
   </head>
   <body>
-    <form onSubmit="search(searchForm.template.value, searchForm.letters.value);" id="searchForm">
-      <table>
-        <tr>
-          <td>
-            Template:
-          </td>
-          <td>
-            <input name="template" type="text"/></br>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            Bad Letters:
-          </td>
-          <td>
-            <input name="letters" type="text"/>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <button type="button" onClick="search(searchForm.template.value, searchForm.letters.value);">Search</button>
-          </td>
-        </tr>
-      </table>
-    </form>
-    <div id="progress">
+    <ul class="tabs">
+      <li><a href="#">Guess</a></li>
+      <li><a href="#">Compose</a></li>
+    </ul>
+
+    <div class="panes">
+      <div>
+        <form onSubmit="search(searchForm.template.value, searchForm.letters.value);" id="searchForm">
+          <table>
+            <tr>
+              <td>
+                Template:
+              </td>
+              <td>
+                <input name="template" type="text"/></br>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                Bad Letters:
+              </td>
+              <td>
+                <input name="letters" type="text"/>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <button type="button" onClick="search(searchForm.template.value, searchForm.letters.value);">Search</button>
+              </td>
+            </tr>
+          </table>
+        </form>
+        <span id="progress"></span>
+        <table id="resultsTable"/>
+      </div>
+      <div>Compose</div>
     </div>
-    <table id="resultsTable"/>
-  </body>
-</html>
-    </form>
+    <script>
+      // perform JavaScript after the document is scriptable.
+      $(function() {
+        // setup ul.tabs to work as tabs for each div directly under div.panes
+        $("ul.tabs").tabs("div.panes > div");
+      });
+    </script>
   </body>
 </html>
