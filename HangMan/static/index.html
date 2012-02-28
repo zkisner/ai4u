@@ -57,7 +57,20 @@
       installFunction(server, 'words');
 
       function showResult(resultJson) {
-        alert(resultJson.value);
+        if (resultJson.error != undefined) {
+          alert(resultJson.error);
+        } else {
+          for (var i in resultJson.results) {
+            var result = resultJson.results[i];
+
+            var table = document.getElementById('resultsTable');
+            var row = document.createElement('tr');
+            var column = document.createElement('td');
+            column.textContent = result;
+            row.appendChild(column);
+            table.appendChild(row);
+          }
+        }
       }
 
       function search(template, letters) {
@@ -92,6 +105,7 @@
         </tr>
       </table>
     </form>
+    <table id="resultsTable"/>
   </body>
 </html>
     </form>
