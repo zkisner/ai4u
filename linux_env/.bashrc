@@ -104,7 +104,9 @@ fi
 if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
     source /etc/bash_completion
 fi
-source ~/.bash_completion
+if [ -f ~/.bash_completion ]; then
+    source ~/.bash_completion
+fi
 
 # Extra Path
 export PATH=$PATH:~/bin
