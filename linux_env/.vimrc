@@ -12,7 +12,7 @@ set backspace=indent,eol,start
 set autowrite
 set autoindent " always set autoindenting on
 set shell=bash
-set directory=/var/nadir/vim
+set directory=/var/$USER/vim
 filetype plugin indent on
 
 " Section: Visual Settings {{{2
