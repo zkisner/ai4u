@@ -14,6 +14,8 @@ set autoindent " always set autoindenting on
 set shell=bash
 set directory=/var/$USER/vim
 filetype plugin indent on
+" When editing a file, always jump to the last cursor position
+autocmd BufReadPost * if line("'\"") > 0 && line ("'\"") <= line("$") | exe "normal! g'\"" | endif
 
 " Section: Visual Settings {{{2
 set cpoptions+=$
@@ -56,36 +58,4 @@ cmap <S-Insert> <C-R>*
 vnoremap p <ESC>:let current_reg = @"<CR>gvdi<C-R>=current_reg<CR><ESC>
 set pastetoggle=<F8>
 
-" cursor restore commands
-
-set viminfo='100,\"100,:20,%,n~/.viminfo
-
-function! ResCur()
-  if line("'\"") <= line("$")
-    normal! g`"
-    return 1
-  endif
-endfunction
-
-augroup resCur
-  autocmd!
-  autocmd BufWinEnter * call ResCur()
-augroup END
-
-" perforce commands
-command! -nargs=* -complete=file PEdit :!g4 edit %
-command! -nargs=* -complete=file PRevert :!g4 revert %
-command! -nargs=* -complete=file PDiff :!g4 diff %
-
-function! s:CheckOutFile()
- if filereadable(expand("%")) && ! filewritable(expand("%"))
-   let option = confirm("Readonly file, do you want to checkout from p4?"
-         \, "&Yes\n&No", 1, "Question")
-   if option == 1
-     PEdit
-   endif
-   edit!
- endif
-endfunction
-au FileChangedRO * nested :call <SID>CheckOutFile()
 
