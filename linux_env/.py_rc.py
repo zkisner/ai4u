@@ -23,7 +23,10 @@ saveMacro = "import readline; readline.write_history_file('"+historyTmp+"'); \
     not lineP.strip().endswith('"+endMarkerStr+"'),  \
     open('"+historyTmp+"').readlines())[:])+'####<<<<<<<<<<'"+endMarkerStr
 
-readline.parse_and_bind('tab: complete')
+if 'libedit' in readline.__doc__:
+    readline.parse_and_bind("bind ^I rl_complete")
+else:
+    readline.parse_and_bind("tab: complete")
 readline.parse_and_bind('\C-w: "'+saveMacro+'"')
 
 def save_history(historyPath=historyPath, endMarkerStr=endMarkerStr):
